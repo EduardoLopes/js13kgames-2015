@@ -1,0 +1,35 @@
+{
+  "name": "js13kgames-2015",
+  "version": "0.0.0",
+  "description": "project description",
+  "author": "Eduardo Lopes",
+  "scripts": {
+    "build": "gulp dist && gulp zip"
+  },
+  "devDependencies": {
+    "babelify": "^6.2.0",
+    "browser": "^0.2.6",
+    "browser-sync": "^2.8.2",
+    "browserify": "^11.0.1",
+    "del": "^1.2.1",
+    "event-stream": "^3.3.1",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^2.3.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-cssbeautify": "^0.1.3",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-htmlbuild": "^0.4.1",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-run": "^1.6.10",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.3.0",
+    "gulp-uncss": "^1.0.3",
+    "gulp-util": "^3.0.6",
+    "gulp-zip": "^3.0.2",
+    "require-dir": "^0.3.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.3.1"
+  }
+}
