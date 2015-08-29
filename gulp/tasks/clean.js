@@ -11,9 +11,9 @@ gulp.task('clean', function(cb) {
 
 });
 
-gulp.task('post-clean', ['RegPack'], function(cb) {
+gulp.task('post-clean', function(cb) {
 
-  return del([dist + '/js/main.js'], cb);
+  return del([dist + '/js/main.js', dist + '/js/main.closure.js'], cb);
 
 });
 

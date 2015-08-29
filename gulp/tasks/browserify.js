@@ -7,8 +7,7 @@ var buffer = require('vinyl-buffer');
 var sourcemaps = require('gulp-sourcemaps');
 var babelify = require("babelify");
 var config = require('../config');
-
-
+var errorify = require('errorify');
 
 var app = config.dir.app;
 
@@ -19,6 +18,7 @@ var app = config.dir.app;
     debug: true
   })
   .transform(babelify)
+  .plugin(errorify)
   .require(app + '/js/main.js', { entry: true });
 
   var bundler = watchify(browserify_instance);
@@ -50,6 +50,7 @@ gulp.task('browserify:build', function() {
 
   var bundler = browserify()
   .transform(babelify)
+  .plugin(errorify)
   .require(app + '/js/main.js', { entry: true });
 
   return bundler.bundle()

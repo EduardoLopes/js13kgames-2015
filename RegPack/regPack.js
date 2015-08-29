@@ -390,6 +390,7 @@ RegPack.prototype = {
 		var resultSize = this.getByteLength(regPackOutput);
 
 		details+="------------------------\nFinal check : ";
+
 		var regToken = new RegExp("["+tokenString+"]","");
 		for(var token="" ; token = regToken.exec(checkedString) ; ) {
 			var k = checkedString.split(token);

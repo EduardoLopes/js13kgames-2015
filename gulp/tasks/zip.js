@@ -10,7 +10,7 @@ const maxFileSize = 13 * 1024;
 
 gulp.task('zip', ['delete-zip'], function(){
   const s = size({showFiles: true});
-  return gulp.src(dist+'/*')
+  return gulp.src(dist+'/**/*')
         .pipe(zip(zipFileName))
         .pipe(s)
         .pipe(notify({

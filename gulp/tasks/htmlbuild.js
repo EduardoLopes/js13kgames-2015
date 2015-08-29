@@ -27,13 +27,16 @@ var gulpSrc = function (opts) {
 };
 
 var jsBuild = es.pipeline(
-  concat('main.js'),
+  concat('main.min.js'),
   uglify(),
   gulp.dest(dist + '/js')
 );
 
 var cssBuild = es.pipeline(
-  uncss({ html: [app + '/index.html'] }),
+  uncss({
+    html: [app + '/index.html'],
+    ignore: ['.center']
+  }),
   autoprefixer({
     browsers: ['last 2 versions']
   }),
