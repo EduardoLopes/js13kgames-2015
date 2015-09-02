@@ -1,5 +1,9 @@
 /*! main.css */
 
+body{
+  background: #181818;
+}
+
 body > .errorify {
   color: red;
   font-family: 'Consolas', monospace;

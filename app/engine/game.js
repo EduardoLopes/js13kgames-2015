@@ -1,19 +1,15 @@
-import {Vector2} from '../engine/vector2';
+import {Vector2} from './vector2';
+import {QuadTree} from './quadtree';
 
 export class Game{
   constructor(options){
 
-    console.log(options, options.screen);
-
     this.screen = {
       size: new Vector2(options.screen.size.x, options.screen.size.y),
-      center: options.screen.center
+      center: options.screen.center,
+      background: options.screen.background
     };
-
     this.containerID = options.containerID;
-
-    console.log(this);
-
     this.setUp();
 
   }
@@ -30,11 +26,31 @@ export class Game{
     this.container.style.width = this.screen.size.x+'px';
     this.container.style.height = this.screen.size.y+'px';
 
+    this.container.style.background = this.screen.background;
+
     if(this.screen.center){
       this.container.classList.add('center');
     }
 
     this.container.appendChild(this.canvas);
+    requestAnimationFrame(this.step.bind(this));
+
+  }
+
+  draw(){
+
+  }
+
+  update(){
+
+  }
+
+  step(){
+
+    this.draw();
+    this.update();
+
+    requestAnimationFrame(this.step.bind(this));
 
   }
 }

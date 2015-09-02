@@ -7,8 +7,9 @@ const game = new Game({
   //https://twitter.com/Siorki/status/637386161544163329
   name: '-',
   screen: {
-    size: new Vector2(480, 800),
-    center: true
+    size: new Vector2(240, 384),
+    center: true,
+    background: '#ccc'
   },
   containerID: 'container'
 });
