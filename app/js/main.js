@@ -25,7 +25,7 @@ function generateMap(){
 }
 
 const map = new Tilemap({
-  map: [generateMap()],
+  map: generateMap(),
   width: 240,
   height: 384,
   rows: 24,
