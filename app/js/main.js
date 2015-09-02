@@ -3,28 +3,6 @@ import {Vector2} from '../engine/vector2';
 import {Tilemap} from '../engine/tilemap';
 import {MAPS} from './maps';
 
-//generate a random map; used only for debug
-function generateMap(){
-
-  let row = 24;
-  let col = 15;
-  let map = [];
-
-  for (let y = 0; y < row; y++) {
-    for (let x = 0; x < col; x++) {
-
-      let index = row * x + y;
-      if(Math.random() * 2 > 1){
-         map[index] = 1;
-      } else {
-        map[index] = 0;
-      }
-    }
-  };
-
-  return map;
-}
-
 class NewGame extends Game{
   constructor(options){
     super(options);
@@ -49,6 +27,26 @@ class NewGame extends Game{
       y: 384
     });
 
+    this.map3 = new Tilemap({
+      map: MAPS[2],
+      width: 240,
+      height: 384,
+      rows: 24,
+      cols: 15,
+      x: 0,
+      y: 384 * 2
+    });
+
+    this.map4 = new Tilemap({
+      map: MAPS[3],
+      width: 240,
+      height: 384,
+      rows: 24,
+      cols: 15,
+      x: 0,
+      y: 384 * 3
+    });
+
 
   }
 
@@ -58,11 +56,19 @@ class NewGame extends Game{
 
     this.map.draw();
     this.map2.draw();
+    this.map3.draw();
+    this.map4.draw();
 
   }
 
   update(){
     super.update();
+
+    this.map.update();
+    this.map2.update();
+    this.map3.update();
+    this.map4.update();
+
 
   }
 

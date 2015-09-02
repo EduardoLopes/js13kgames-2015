@@ -33,11 +33,6 @@ export class Tilemap{
       lastY+=1;
     }
 
-/*    console.log(firstX,
-firstY,
-lastX,
-lastY)*/
-
     for (let y = firstY; y < lastY; y++) {
       for (let x = firstX; x < lastX; x++) {
 
@@ -53,6 +48,10 @@ lastY)*/
   }
 
   update(){
+
+    if(Core.camera.y > this.height + this.y){
+      this.y += (this.height * 4);
+    }
 
   }
 
