@@ -1,3 +1,4 @@
+import {Core} from './core';
 import {Vector2} from './vector2';
 import {QuadTree} from './quadtree';
 
@@ -12,6 +13,8 @@ export class Game{
     this.containerID = options.containerID;
     this.setUp();
 
+    Core.screen = this.screen;
+
   }
 
   setUp(){
@@ -19,6 +22,9 @@ export class Game{
     this.container = document.getElementById(this.containerID);
     this.canvas = document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d');
+
+    Core.canvas = this.canvas;
+    Core.ctx = this.ctx;
 
     this.canvas.width = this.screen.size.x;
     this.canvas.height = this.screen.size.y;
