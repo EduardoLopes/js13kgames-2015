@@ -1,5 +1,6 @@
 import {Core} from './core';
 import {Vector2} from './vector2';
+import {Camera} from './camera';
 import {QuadTree} from './quadtree';
 
 export class Game{
@@ -23,9 +24,6 @@ export class Game{
     this.canvas = document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d');
 
-    Core.canvas = this.canvas;
-    Core.ctx = this.ctx;
-
     this.canvas.width = this.screen.size.x;
     this.canvas.height = this.screen.size.y;
 
@@ -39,15 +37,24 @@ export class Game{
     }
 
     this.container.appendChild(this.canvas);
+
+    Core.canvas = this.canvas;
+    Core.ctx = this.ctx;
+    Core.camera = new Camera(0,0,this.screen.size.x, this.screen.size.y);
+
     requestAnimationFrame(this.step.bind(this));
 
   }
 
   draw(){
 
+    this.ctx.clearRect(0,0, this.screen.size.x, this.screen.size.y);
+
   }
 
   update(){
+
+    Core.camera.update();
 
   }
 

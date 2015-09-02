@@ -1,6 +1,7 @@
 import {Game} from '../engine/game';
 import {Vector2} from '../engine/vector2';
 import {Tilemap} from '../engine/tilemap';
+import {MAPS} from './maps';
 
 //generate a random map; used only for debug
 function generateMap(){
@@ -24,19 +25,30 @@ function generateMap(){
   return map;
 }
 
-const map = new Tilemap({
-  map: generateMap(),
-  width: 240,
-  height: 384,
-  rows: 24,
-  cols: 15,
-  x: 0,
-  y: 0
-});
-
 class NewGame extends Game{
   constructor(options){
     super(options);
+
+    this.map = new Tilemap({
+      map: MAPS[0],
+      width: 240,
+      height: 384,
+      rows: 24,
+      cols: 15,
+      x: 0,
+      y: 0
+    });
+
+    this.map2 = new Tilemap({
+      map: MAPS[1],
+      width: 240,
+      height: 384,
+      rows: 24,
+      cols: 15,
+      x: 0,
+      y: 384
+    });
+
 
   }
 
@@ -44,7 +56,8 @@ class NewGame extends Game{
 
     super.draw();
 
-    map.draw();
+    this.map.draw();
+    this.map2.draw();
 
   }
 

@@ -15,16 +15,28 @@ export class Tilemap{
 
     //this is only for debug
     //the camera class still will be implemented
-    this.camera = {x: 0, y: 0};
 
   }
 
   draw(){
 
-    let firstX = (this.camera.x) / this.tilesize >> 0;
-    let firstY = (this.camera.y) / this.tilesize >> 0;
-    let lastX = (Core.screen.size.x + this.camera.x) / this.tilesize >> 0;
-    let lastY = (Core.screen.size.y + this.camera.y) / this.tilesize >> 0;
+    let firstX = ((Core.camera.x - this.x)) / this.tilesize >> 0;
+    let firstY = ((Core.camera.y - this.y)) / this.tilesize >> 0;
+    let lastX = (Core.screen.size.x + (Core.camera.x - this.x)) / this.tilesize >> 0;
+    let lastY = (Core.screen.size.y + (Core.camera.y - this.y)) / this.tilesize >> 0;
+
+    if((Core.camera.x) % this.tilesize){
+      lastX+=1;
+    }
+
+    if(Core.camera.y % this.tilesize){
+      lastY+=1;
+    }
+
+/*    console.log(firstX,
+firstY,
+lastX,
+lastY)*/
 
     for (let y = firstY; y < lastY; y++) {
       for (let x = firstX; x < lastX; x++) {
@@ -32,7 +44,7 @@ export class Tilemap{
         let index = this.cols * y + x;
         if(this.map[index] > 0){
           Core.ctx.fillStyle = '#181818';
-          Core.ctx.fillRect((x * this.tilesize) + this.x, (y * this.tilesize) + this.y, this.tilesize, this.tilesize);
+          Core.ctx.fillRect(((x * this.tilesize) + this.x) - Core.camera.x, ((y * this.tilesize) + this.y) - Core.camera.y, this.tilesize, this.tilesize);
         }
 
       }
