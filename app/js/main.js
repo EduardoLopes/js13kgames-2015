@@ -2,10 +2,15 @@ import {Game} from '../engine/game';
 import {Vector2} from '../engine/vector2';
 import {Tilemap} from '../engine/tilemap';
 import {MAPS} from './maps';
+import {Player} from './player';
+
+const SAT = require('sat');
 
 class NewGame extends Game{
   constructor(options){
     super(options);
+
+    this.player = new Player(32, 16);
 
     this.map = new Tilemap({
       map: MAPS[0],
@@ -47,7 +52,6 @@ class NewGame extends Game{
       y: 384 * 3
     });
 
-
   }
 
   draw(){
@@ -59,6 +63,8 @@ class NewGame extends Game{
     this.map3.draw();
     this.map4.draw();
 
+    this.player.draw();
+
   }
 
   update(){
@@ -69,6 +75,30 @@ class NewGame extends Game{
     this.map3.update();
     this.map4.update();
 
+    this.player.update();
+
+    let minX = Math.floor((this.player.x) / 16);
+    let maxX = Math.floor((this.player.x + 16) / 16);
+    let minY = Math.floor((this.player.y) / 16);
+    let maxY = Math.floor((this.player.y + 16) / 16);
+
+    for (let h = minY; h <= maxY; h++) {
+      for (let w = minX; w <= maxX; w++) {
+
+        if(this.map.tileIsSolid(w * 16, h * 16)){
+
+          var box1 = new SAT.Box(new SAT.Vector(this.player.x, this.player.y), this.player.size, this.player.size).toPolygon();
+          var box2 = new SAT.Box(new SAT.Vector(w * 16, h * 16), 16, 16).toPolygon();
+          var response = new SAT.Response();
+          var collided = SAT.testPolygonPolygon(box1, box2, response);
+
+          this.player.x -= response.overlapV.x;
+          this.player.y -= response.overlapV.y;
+
+        }
+
+      }
+    }
 
   }
 

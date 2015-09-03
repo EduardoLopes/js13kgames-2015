@@ -1,6 +1,7 @@
 import {Core} from './core';
 import {Vector2} from './vector2';
 import {Camera} from './camera';
+import {Mouse} from './mouse';
 import {QuadTree} from './quadtree';
 
 export class Game{
@@ -41,6 +42,7 @@ export class Game{
     Core.canvas = this.canvas;
     Core.ctx = this.ctx;
     Core.camera = new Camera(0,0,this.screen.size.x, this.screen.size.y);
+    Core.mouse = new Mouse();
 
     requestAnimationFrame(this.step.bind(this));
 

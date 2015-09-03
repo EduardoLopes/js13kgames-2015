@@ -6,7 +6,7 @@ export class Camera extends Rectangle{
   }
 
   update(){
-    this.y += 1;
+    //this.y += 1;
 
   }
 }

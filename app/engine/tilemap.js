@@ -47,6 +47,15 @@ export class Tilemap{
 
   }
 
+  tileIsSolid(x, y){
+
+    x = x / this.tilesize >> 0;
+    y = y / this.tilesize >> 0;
+
+    return this.map[this.cols * y + x] > 0;
+
+  }
+
   update(){
 
     if(Core.camera.y > this.height + this.y){
