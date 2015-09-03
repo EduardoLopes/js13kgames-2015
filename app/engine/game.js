@@ -3,6 +3,7 @@ import {Vector2} from './vector2';
 import {Camera} from './camera';
 import {Mouse} from './mouse';
 import {QuadTree} from './quadtree';
+import {InitKeys} from './keys';
 
 export class Game{
   constructor(options){
@@ -43,6 +44,7 @@ export class Game{
     Core.ctx = this.ctx;
     Core.camera = new Camera(0,0,this.screen.size.x, this.screen.size.y);
     Core.mouse = new Mouse();
+    InitKeys();
 
     requestAnimationFrame(this.step.bind(this));
 

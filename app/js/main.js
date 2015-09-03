@@ -1,4 +1,5 @@
 import {Game} from '../engine/game';
+import {Core} from '../engine/core';
 import {Vector2} from '../engine/vector2';
 import {Tilemap} from '../engine/tilemap';
 import {MAPS} from './maps';
@@ -67,6 +68,25 @@ class NewGame extends Game{
 
   }
 
+  checkTileCollision(w, h){
+
+    if(this.map.tileIsSolid(w * 16, h * 16)){
+
+      Core.ctx.fillStyle = '#ffe88d';
+      Core.ctx.fillRect(w * 16, h * 16, 16, 16);
+
+      var box1 = new SAT.Box(new SAT.Vector(this.player.nextPosition.x, this.player.nextPosition.y), this.player.size, this.player.size).toPolygon();
+      var box2 = new SAT.Box(new SAT.Vector(w * 16, h * 16), 16, 16).toPolygon();
+      var response = new SAT.Response();
+      var collided = SAT.testPolygonPolygon(box1, box2, response);
+
+      this.player.nextPosition.x -= response.overlapV.x;
+      this.player.nextPosition.y -= response.overlapV.y;
+
+    }
+
+  }
+
   update(){
     super.update();
 
@@ -77,28 +97,35 @@ class NewGame extends Game{
 
     this.player.update();
 
-    let minX = Math.floor((this.player.x) / 16);
-    let maxX = Math.floor((this.player.x + 16) / 16);
-    let minY = Math.floor((this.player.y) / 16);
-    let maxY = Math.floor((this.player.y + 16) / 16);
+    let minX = Math.floor(((this.player.nextPosition.x)) / 16);
+    let maxX = Math.floor(((this.player.nextPosition.x) + 16) / 16);
+    let minY = Math.floor(((this.player.nextPosition.y)) / 16);
+    let maxY = Math.floor(((this.player.nextPosition.y) + 16) / 16);
 
-    for (let h = minY; h <= maxY; h++) {
-      for (let w = minX; w <= maxX; w++) {
+    if(this.player.goingUpOrDown == 'up'){
 
-        if(this.map.tileIsSolid(w * 16, h * 16)){
+      for (let h = maxY; h >= minY; h--) {
+        for (let w = maxX; w >= minX; w--) {
 
-          var box1 = new SAT.Box(new SAT.Vector(this.player.x, this.player.y), this.player.size, this.player.size).toPolygon();
-          var box2 = new SAT.Box(new SAT.Vector(w * 16, h * 16), 16, 16).toPolygon();
-          var response = new SAT.Response();
-          var collided = SAT.testPolygonPolygon(box1, box2, response);
-
-          this.player.x -= response.overlapV.x;
-          this.player.y -= response.overlapV.y;
+          this.checkTileCollision(w, h);
 
         }
-
       }
+
+    } else if(this.player.goingUpOrDown == 'down'){
+
+      for (let h = minY; h <= maxY; h++) {
+        for (let w = minX; w <= maxX; w++) {
+
+          this.checkTileCollision(w, h);
+
+        }
+      }
+
     }
+
+    this.player.x = this.player.nextPosition.x;
+    this.player.y = this.player.nextPosition.y;
 
   }
 

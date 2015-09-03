@@ -38,7 +38,7 @@ export class Tilemap{
 
         let index = this.cols * y + x;
         if(this.map[index] > 0){
-          Core.ctx.fillStyle = '#181818';
+          Core.ctx.fillStyle = 'rgba(24,24,24,1)';
           Core.ctx.fillRect(((x * this.tilesize) + this.x) - Core.camera.x, ((y * this.tilesize) + this.y) - Core.camera.y, this.tilesize, this.tilesize);
         }
 
