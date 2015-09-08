@@ -49,8 +49,11 @@ class NewGame extends Game{
 
     super.draw();
 
-    for (let i = 0; i < this.maps.length; i++) {
-      this.maps[i].draw();
+    let normCameraY = Core.camera.y / 384 >> 0;
+    let normCameraHeight = (Core.camera.y + Core.camera.h) / 384 >> 0;
+
+    for (let i = normCameraY; i <= normCameraHeight; i++) {
+      this.maps[i % this.maps.length].draw();
     };
 
     this.player.draw();
