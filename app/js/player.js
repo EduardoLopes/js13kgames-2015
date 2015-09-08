@@ -1,24 +1,24 @@
 import {Core} from '../engine/core';
+import {BasicObject} from '../engine/BasicObject';
 
-export class Player{
-  constructor(x, y){
-    this.x = x;
-    this.y = y;
+export class Player extends BasicObject{
+  constructor(options){
+
+    super(options)
+
     this.nextPosition = {x: this.x, y: this.y};
-    this.size = 16;
     this.goingUpOrDown = 'up';
+
   }
 
   draw(){
+
     Core.ctx.fillStyle = '#188818';
-    Core.ctx.fillRect(this.x, this.y, this.size, this.size);
+    Core.ctx.fillRect(this.x, this.y, this.width, this.height);
+
   }
 
   update(){
-
-/*    this.x = Core.mouse.x;
-    this.y = Core.mouse.y;*/
-
 
     if(Core.keys[38]){
       this.nextPosition.y -= 2;

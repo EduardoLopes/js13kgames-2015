@@ -2,6 +2,7 @@ import {Game} from '../engine/game';
 import {Core} from '../engine/core';
 import {Vector2} from '../engine/vector2';
 import {Tilemap} from '../engine/tilemap';
+import {BasicObject} from '../engine/BasicObject';
 import {MAPS} from './maps';
 import {Player} from './player';
 
@@ -11,7 +12,12 @@ class NewGame extends Game{
   constructor(options){
     super(options);
 
-    this.player = new Player(32, 16);
+    this.player = new Player({
+        x: 32,
+        y: 16,
+        width: 16,
+        height: 16
+    });
 
     this.map = new Tilemap({
       map: MAPS[0],
@@ -75,10 +81,12 @@ class NewGame extends Game{
       Core.ctx.fillStyle = '#ffe88d';
       Core.ctx.fillRect(w * 16, h * 16, 16, 16);
 
-      var box1 = new SAT.Box(new SAT.Vector(this.player.nextPosition.x, this.player.nextPosition.y), this.player.size, this.player.size).toPolygon();
+      this.player.shape.pos.x = this.player.nextPosition.x;
+      this.player.shape.pos.y = this.player.nextPosition.y;
+
       var box2 = new SAT.Box(new SAT.Vector(w * 16, h * 16), 16, 16).toPolygon();
       var response = new SAT.Response();
-      var collided = SAT.testPolygonPolygon(box1, box2, response);
+      var collided = SAT.testPolygonPolygon(this.player.shape, box2, response);
 
       this.player.nextPosition.x -= response.overlapV.x;
       this.player.nextPosition.y -= response.overlapV.y;
