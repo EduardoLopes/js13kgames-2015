@@ -40,6 +40,7 @@ class NewGame extends Game{
         x: 0,
         y: 384 * i
       });
+
     };
 
   }
