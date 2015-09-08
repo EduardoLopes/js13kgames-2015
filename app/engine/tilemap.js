@@ -1,6 +1,30 @@
 import {Core} from './core';
 const SAT = require('sat');
 
+const cacheCanvas = document.createElement('canvas');
+const cacheCtx = cacheCanvas.getContext('2d');
+
+function cacheTilemap(tilemap){
+
+    cacheCanvas.width = tilemap.width;
+    cacheCanvas.height = tilemap.height;
+
+    for (let y = 0; y < tilemap.rows; y++) {
+      for (let x = 0; x < tilemap.cols; x++) {
+
+        let index = tilemap.cols * y + x;
+
+        if(tilemap.map[index] > 0){
+          cacheCtx.fillStyle = 'rgba(24,24,24,1)';
+          cacheCtx.fillRect(((x * tilemap.tilesize)), ((y * tilemap.tilesize)), tilemap.tilesize, tilemap.tilesize);
+        }
+
+      }
+    };
+
+  return cacheCanvas.toDataURL("image/png");
+}
+
 export class Tilemap{
 
   constructor(options){
@@ -14,37 +38,15 @@ export class Tilemap{
     this.x = options.x;
     this.y = options.y;
 
-    //this is only for debug
-    //the camera class still will be implemented
+    this.mapImage = new Image();
+
+    this.mapImage.src = cacheTilemap(this);
 
   }
 
   draw(){
 
-    let firstX = ((Core.camera.x - this.x)) / this.tilesize >> 0;
-    let firstY = ((Core.camera.y - this.y)) / this.tilesize >> 0;
-    let lastX = (Core.screen.size.x + (Core.camera.x - this.x)) / this.tilesize >> 0;
-    let lastY = (Core.screen.size.y + (Core.camera.y - this.y)) / this.tilesize >> 0;
-
-    if((Core.camera.x) % this.tilesize){
-      lastX+=1;
-    }
-
-    if(Core.camera.y % this.tilesize){
-      lastY+=1;
-    }
-
-    for (let y = firstY; y < lastY; y++) {
-      for (let x = firstX; x < lastX; x++) {
-
-        let index = this.cols * y + x;
-        if(this.map[index] > 0){
-          Core.ctx.fillStyle = 'rgba(24,24,24,1)';
-          Core.ctx.fillRect(((x * this.tilesize) + this.x) - Core.camera.x, ((y * this.tilesize) + this.y) - Core.camera.y, this.tilesize, this.tilesize);
-        }
-
-      }
-    };
+    Core.ctx.drawImage(this.mapImage, this.x - Core.camera.x, this.y - Core.camera.y);
 
   }
 
