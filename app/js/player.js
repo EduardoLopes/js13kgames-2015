@@ -34,6 +34,8 @@ export class Player extends BasicObject{
       this.nextPosition.x += 2;
     }
 
+    this.nextPosition.y = Math.max(this.nextPosition.y, Core.camera.y);
+
 
 
   }
