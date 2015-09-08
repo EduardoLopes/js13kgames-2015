@@ -1,4 +1,5 @@
 import {Core} from './core';
+const SAT = require('sat');
 
 export class Tilemap{
 
@@ -65,3 +66,6 @@ export class Tilemap{
   }
 
 }
+
+Tilemap.tileShape = new SAT.Box(new SAT.Vector(0, 0), 16, 16).toPolygon();
+Tilemap.collisionResponse = new SAT.Response();

@@ -68,12 +68,15 @@ class NewGame extends Game{
         this.player.shape.pos.x = this.player.nextPosition.x;
         this.player.shape.pos.y = this.player.nextPosition.y;
 
-        var box2 = new SAT.Box(new SAT.Vector(w * 16, h * 16), 16, 16).toPolygon();
-        var response = new SAT.Response();
-        var collided = SAT.testPolygonPolygon(this.player.shape, box2, response);
+        Tilemap.tileShape.pos.x = w * 16;
+        Tilemap.tileShape.pos.y = h * 16;
 
-        this.player.nextPosition.x -= response.overlapV.x;
-        this.player.nextPosition.y -= response.overlapV.y;
+        SAT.testPolygonPolygon(this.player.shape, Tilemap.tileShape, Tilemap.collisionResponse);
+
+        this.player.nextPosition.x -= Tilemap.collisionResponse.overlapV.x;
+        this.player.nextPosition.y -= Tilemap.collisionResponse.overlapV.y;
+
+        Tilemap.collisionResponse.clear();
 
       }
 
