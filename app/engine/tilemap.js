@@ -49,8 +49,8 @@ export class Tilemap{
 
   tileIsSolid(x, y){
 
-    x = x / this.tilesize >> 0;
-    y = y / this.tilesize >> 0;
+    x = (x - this.x) / this.tilesize >> 0;
+    y = (y - this.y) / this.tilesize >> 0;
 
     return this.map[this.cols * y + x] > 0;
 

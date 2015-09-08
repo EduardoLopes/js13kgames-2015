@@ -14,7 +14,7 @@ export class Player extends BasicObject{
   draw(){
 
     Core.ctx.fillStyle = '#188818';
-    Core.ctx.fillRect(this.x, this.y, this.width, this.height);
+    Core.ctx.fillRect(this.x - Core.camera.x, this.y - Core.camera.y, this.width, this.height);
 
   }
 

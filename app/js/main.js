@@ -12,6 +12,8 @@ class NewGame extends Game{
   constructor(options){
     super(options);
 
+    this.maps = [];
+
     this.player = new Player({
         x: 32,
         y: 16,
@@ -19,45 +21,26 @@ class NewGame extends Game{
         height: 16
     });
 
-    this.map = new Tilemap({
-      map: MAPS[0],
-      width: 240,
-      height: 384,
-      rows: 24,
-      cols: 15,
-      x: 0,
-      y: 0
-    });
+    Core.camera.setObjectToFollow(this.player);
 
-    this.map2 = new Tilemap({
-      map: MAPS[1],
-      width: 240,
-      height: 384,
-      rows: 24,
-      cols: 15,
-      x: 0,
-      y: 384
-    });
+    this.initMaps();
 
-    this.map3 = new Tilemap({
-      map: MAPS[2],
-      width: 240,
-      height: 384,
-      rows: 24,
-      cols: 15,
-      x: 0,
-      y: 384 * 2
-    });
+  }
 
-    this.map4 = new Tilemap({
-      map: MAPS[3],
-      width: 240,
-      height: 384,
-      rows: 24,
-      cols: 15,
-      x: 0,
-      y: 384 * 3
-    });
+  initMaps(){
+
+    for (let i = 0; i < MAPS.length; i++) {
+
+      this.maps[i] = new Tilemap({
+        map: MAPS[i],
+        width: 240,
+        height: 384,
+        rows: 24,
+        cols: 15,
+        x: 0,
+        y: 384 * i
+      });
+    };
 
   }
 
@@ -65,10 +48,9 @@ class NewGame extends Game{
 
     super.draw();
 
-    this.map.draw();
-    this.map2.draw();
-    this.map3.draw();
-    this.map4.draw();
+    for (let i = 0; i < this.maps.length; i++) {
+      this.maps[i].draw();
+    };
 
     this.player.draw();
 
@@ -76,32 +58,35 @@ class NewGame extends Game{
 
   checkTileCollision(w, h){
 
-    if(this.map.tileIsSolid(w * 16, h * 16)){
+    for (let i = 0; i < this.maps.length; i++) {
 
-      Core.ctx.fillStyle = '#ffe88d';
-      Core.ctx.fillRect(w * 16, h * 16, 16, 16);
+      if(this.maps[i].tileIsSolid(w * 16, h * 16)){
 
-      this.player.shape.pos.x = this.player.nextPosition.x;
-      this.player.shape.pos.y = this.player.nextPosition.y;
+        Core.ctx.fillStyle = '#ffe88d';
+        Core.ctx.fillRect(((w * 16)) - Core.camera.x, ((h * 16)) - Core.camera.y, 16, 16);
 
-      var box2 = new SAT.Box(new SAT.Vector(w * 16, h * 16), 16, 16).toPolygon();
-      var response = new SAT.Response();
-      var collided = SAT.testPolygonPolygon(this.player.shape, box2, response);
+        this.player.shape.pos.x = this.player.nextPosition.x;
+        this.player.shape.pos.y = this.player.nextPosition.y;
 
-      this.player.nextPosition.x -= response.overlapV.x;
-      this.player.nextPosition.y -= response.overlapV.y;
+        var box2 = new SAT.Box(new SAT.Vector(w * 16, h * 16), 16, 16).toPolygon();
+        var response = new SAT.Response();
+        var collided = SAT.testPolygonPolygon(this.player.shape, box2, response);
 
-    }
+        this.player.nextPosition.x -= response.overlapV.x;
+        this.player.nextPosition.y -= response.overlapV.y;
+
+      }
+
+    };
 
   }
 
   update(){
     super.update();
 
-    this.map.update();
-    this.map2.update();
-    this.map3.update();
-    this.map4.update();
+    for (let i = 0; i < this.maps; i++) {
+      this.maps[i].update();
+    };
 
     this.player.update();
 
