@@ -57,6 +57,64 @@ export class Tilemap{
 
   }
 
+    checkTileCollision(w, h, object){
+
+      if(this.tileIsSolid(w * 16, h * 16)){
+
+        Core.ctx.fillStyle = '#ffe88d';
+        Core.ctx.fillRect(((w * 16)) - Core.camera.x, ((h * 16)) - Core.camera.y, 16, 16);
+
+        object.shape.pos.x = object.nextPosition.x;
+        object.shape.pos.y = object.nextPosition.y;
+
+        Tilemap.tileShape.pos.x = w * 16;
+        Tilemap.tileShape.pos.y = h * 16;
+
+        SAT.testPolygonPolygon(object.shape, Tilemap.tileShape, Tilemap.collisionResponse);
+
+        object.nextPosition.x -= Tilemap.collisionResponse.overlapV.x;
+        object.nextPosition.y -= Tilemap.collisionResponse.overlapV.y;
+
+        Tilemap.collisionResponse.clear();
+
+      }
+
+  }
+
+  checkCollision(object){
+
+    let minX = Math.floor(((object.nextPosition.x)) / 16);
+    let maxX = Math.floor(((object.nextPosition.x) + 16) / 16);
+    let minY = Math.floor(((object.nextPosition.y)) / 16);
+    let maxY = Math.floor(((object.nextPosition.y) + 16) / 16);
+
+    if(object.goingUpOrDown == 'up'){
+
+      for (let h = maxY; h >= minY; h--) {
+        for (let w = maxX; w >= minX; w--) {
+
+          this.checkTileCollision(w, h, object);
+
+        }
+      }
+
+    } else if(object.goingUpOrDown == 'down'){
+
+      for (let h = minY; h <= maxY; h++) {
+        for (let w = minX; w <= maxX; w++) {
+
+          this.checkTileCollision(w, h, object);
+
+        }
+      }
+
+    }
+
+    object.x = object.nextPosition.x;
+    object.y = object.nextPosition.y;
+
+  }
+
   update(){
 
     if(Core.camera.y > this.height + this.y){

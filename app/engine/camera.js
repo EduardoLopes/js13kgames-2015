@@ -1,4 +1,5 @@
 import {Rectangle} from './rectangle';
+const SAT = require('sat');
 
 export class Camera extends Rectangle{
   constructor(x, y, w, h){

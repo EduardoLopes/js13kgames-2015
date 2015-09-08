@@ -56,72 +56,18 @@ class NewGame extends Game{
 
   }
 
-  checkTileCollision(w, h){
-
-    for (let i = 0; i < this.maps.length; i++) {
-
-      if(this.maps[i].tileIsSolid(w * 16, h * 16)){
-
-        Core.ctx.fillStyle = '#ffe88d';
-        Core.ctx.fillRect(((w * 16)) - Core.camera.x, ((h * 16)) - Core.camera.y, 16, 16);
-
-        this.player.shape.pos.x = this.player.nextPosition.x;
-        this.player.shape.pos.y = this.player.nextPosition.y;
-
-        Tilemap.tileShape.pos.x = w * 16;
-        Tilemap.tileShape.pos.y = h * 16;
-
-        SAT.testPolygonPolygon(this.player.shape, Tilemap.tileShape, Tilemap.collisionResponse);
-
-        this.player.nextPosition.x -= Tilemap.collisionResponse.overlapV.x;
-        this.player.nextPosition.y -= Tilemap.collisionResponse.overlapV.y;
-
-        Tilemap.collisionResponse.clear();
-
-      }
-
-    };
-
-  }
-
   update(){
     super.update();
 
-    for (let i = 0; i < this.maps; i++) {
+    for (let i = 0; i < this.maps.length; i++) {
       this.maps[i].update();
     };
 
     this.player.update();
 
-    let minX = Math.floor(((this.player.nextPosition.x)) / 16);
-    let maxX = Math.floor(((this.player.nextPosition.x) + 16) / 16);
-    let minY = Math.floor(((this.player.nextPosition.y)) / 16);
-    let maxY = Math.floor(((this.player.nextPosition.y) + 16) / 16);
-
-    if(this.player.goingUpOrDown == 'up'){
-
-      for (let h = maxY; h >= minY; h--) {
-        for (let w = maxX; w >= minX; w--) {
-
-          this.checkTileCollision(w, h);
-
-        }
-      }
-
-    } else if(this.player.goingUpOrDown == 'down'){
-
-      for (let h = minY; h <= maxY; h++) {
-        for (let w = minX; w <= maxX; w++) {
-
-          this.checkTileCollision(w, h);
-
-        }
-      }
-
-    }
-
-    this.player.x = this.player.nextPosition.x;
-    this.player.y = this.player.nextPosition.y;
+    for (let i = 0; i < this.maps.length; i++) {
+      this.maps[i].checkCollision(this.player);
+    };
 
   }
 
