@@ -17,7 +17,7 @@ export class Camera extends Rectangle{
     //this.y += 1;
 
     if(this.follow != null){
-      this.y += (this.follow.y - (this.y + this.h / 2)) * 0.05 >> 0;
+      this.y += (this.follow.y - (this.y + this.h / 3)) * 0.05 >> 0;
     }
 
     if(this.y > this.cameraMaxY){

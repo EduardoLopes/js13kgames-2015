@@ -66,9 +66,7 @@ class NewGame extends Game{
 
     this.player.update();
 
-    for (let i = 0; i < this.maps.length; i++) {
-      this.maps[i].checkCollision(this.player);
-    };
+    this.maps[(this.player.y / 384 >> 0) % this.maps.length].checkCollision(this.player);
 
   }
 
