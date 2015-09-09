@@ -6,8 +6,6 @@ import {BasicObject} from '../engine/BasicObject';
 import {MAPS} from './maps';
 import {Player} from './player';
 
-const SAT = require('sat');
-
 class NewGame extends Game{
   constructor(options){
     super(options);
@@ -51,7 +49,7 @@ class NewGame extends Game{
 
             let index = Core.maps[i % Core.maps.length].cols * h + w;
 
-            Core.pathfinderMap.set(w, h, Core.maps[i % Core.maps.length].map[index]);
+            //Core.pathfinderMap.set(w, h, Core.maps[i % Core.maps.length].map[index]);
 
           }
         }
@@ -85,7 +83,7 @@ class NewGame extends Game{
 
             let index = Core.maps[i % Core.maps.length].cols * h + w;
 
-            Core.pathfinderMap.set(w, h, Core.maps[i % Core.maps.length].map[index]);
+            //Core.pathfinderMap.set(w, h, Core.maps[i % Core.maps.length].map[index]);
 
           }
         }

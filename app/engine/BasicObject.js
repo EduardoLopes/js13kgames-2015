@@ -1,6 +1,6 @@
 import {Core} from './core';
 import {Vector2} from './vector2';
-const SAT = require('sat');
+const SAT = require('./sat/SAT.js');
 
 export class BasicObject{
   constructor(options){

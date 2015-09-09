@@ -1,5 +1,5 @@
 import {Core} from './core';
-const SAT = require('sat');
+const SAT = require('./sat/SAT.js');
 
 const cacheCanvas = document.createElement('canvas');
 const cacheCtx = cacheCanvas.getContext('2d');

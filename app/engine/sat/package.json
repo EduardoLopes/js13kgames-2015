@@ -1,0 +1,50 @@
+{
+  "name": "sat",
+  "description": "Library for performing 2D collision detection",
+  "version": "0.5.0",
+  "author": {
+    "name": "Jim Riecken",
+    "email": "jriecken@gmail.com"
+  },
+  "keywords": [
+    "collision detection",
+    "sat",
+    "game"
+  ],
+  "license": {
+    "type": "MIT",
+    "url": "http://github.com/jriecken/sat-js/raw/master/LICENSE"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jriecken/sat-js.git"
+  },
+  "bugs": {
+    "url": "http://github.com/jriecken/sat-js/issues"
+  },
+  "main": "SAT.js",
+  "gitHead": "91d474629862bcca1079cec1bc60d1f9fa344a0e",
+  "homepage": "https://github.com/jriecken/sat-js",
+  "_id": "sat@0.5.0",
+  "scripts": {},
+  "_shasum": "f74940d2c8aefdaff570798d4ecd802e5aceaac1",
+  "_from": "sat@*",
+  "_npmVersion": "2.1.14",
+  "_nodeVersion": "0.10.35",
+  "_npmUser": {
+    "name": "jriecken",
+    "email": "jriecken@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "jriecken",
+      "email": "jriecken@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "f74940d2c8aefdaff570798d4ecd802e5aceaac1",
+    "tarball": "http://registry.npmjs.org/sat/-/sat-0.5.0.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/sat/-/sat-0.5.0.tgz"
+}

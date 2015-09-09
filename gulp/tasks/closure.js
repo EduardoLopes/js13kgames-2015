@@ -14,8 +14,7 @@ gulp.task('closure-compiler', ['htmlbuild'], function() {
         // .call is super important, otherwise Closure Library will not work in strict mode.
         output_wrapper: '(function(){%output%}).call(window);',
         warning_level: 'VERBOSE',
-        language_in: 'ECMASCRIPT5_STRICT',
-        compilation_level: 'simple'
+        language_in: 'ECMASCRIPT5_STRICT'
       }
     }))
     .pipe(gulp.dest(dist + '/js/'));

@@ -28,7 +28,11 @@ var gulpSrc = function (opts) {
 
 var jsBuild = es.pipeline(
   concat('main.min.js'),
-  uglify(),
+  uglify({
+    compress: {
+      unsafe: true
+    }
+  }),
   gulp.dest(dist + '/js')
 );
 
