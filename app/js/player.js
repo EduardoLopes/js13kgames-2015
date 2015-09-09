@@ -2,6 +2,7 @@ import {Core} from '../engine/core';
 import {BasicObject} from '../engine/BasicObject';
 import {angle} from '../engine/angle';
 import {lerp} from '../engine/lerp';
+import {distance} from '../engine/distance';
 
 
 
@@ -13,7 +14,7 @@ export class Player extends BasicObject{
     this.nextPosition = {x: this.x, y: this.y};
     this.goingUpOrDown = 'up';
     this.angleToGo = angle(this.x + (this.width / 2), this.y + (this.height / 2), Core.mouse.lastClick.x, Core.mouse.lastClick.y);
-
+    this.speed = 10;
   }
 
   draw(){
@@ -25,16 +26,22 @@ export class Player extends BasicObject{
 
   moveTo(position){
 
-    //this.angleToGo = angle(this.x + (this.width / 2), this.y + (this.height / 2), Core.mouse.lastClick.x, Core.mouse.lastClick.y);
+    this.angleToGo = angle(this.x + (this.width / 2), this.y + (this.height / 2), Core.mouse.lastClick.x, Core.mouse.lastClick.y);
 
-/*      let velocityx = Math.cos(this.angleToGo) * 10;
-      let velocityy = Math.sin(this.angleToGo) * 10;*/
+      let x = Math.cos(this.angleToGo) * this.speed;
+      let y = Math.sin(this.angleToGo) * this.speed;
 
-      let x = position.x - this.x;
-      let y = position.y - this.y;
+      if(distance(this.x + (this.width / 2), this.y + (this.height / 2), Core.mouse.lastClick.x, Core.mouse.lastClick.y) >= this.speed){
 
-      this.nextPosition.x += x / 20;
-      this.nextPosition.y += y / 20;
+        this.nextPosition.x += x;
+        this.nextPosition.y += y;
+        this.speed = 5;
+
+      } else {
+        this.nextPosition.x = position.x - (this.width / 2);
+        this.nextPosition.y = position.y - (this.height / 2);
+        this.speed = 0;
+      }
 
   }
 
