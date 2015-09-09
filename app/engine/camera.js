@@ -7,6 +7,8 @@ export class Camera extends Rectangle{
 
     this.follow = null;
     this.cameraMaxY = 0;
+    this.normalizedByMapHeight = 0;
+    this.normalizedMapY = 0;
   }
 
   setObjectToFollow(object){
@@ -26,6 +28,8 @@ export class Camera extends Rectangle{
 
     this.y = Math.max(this.cameraMaxY, this.y);
 
+    this.normalizedMapY = this.y / 384 >> 0;
+    this.normalizedMapHeight = (this.y + this.h) / 384 >> 0;
 
   }
 }

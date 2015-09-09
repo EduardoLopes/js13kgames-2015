@@ -5,3 +5,4 @@ Core.canvas = null;
 Core.screen = null;
 Core.camera = null;
 Core.keys = [];
+Core.maps = [];

@@ -12,7 +12,7 @@ class NewGame extends Game{
   constructor(options){
     super(options);
 
-    this.maps = [];
+    Core.maps = [];
 
     this.player = new Player({
         x: 32,
@@ -31,7 +31,7 @@ class NewGame extends Game{
 
     for (let i = 0; i < MAPS.length; i++) {
 
-      this.maps[i] = new Tilemap({
+      Core.maps[i] = new Tilemap({
         map: MAPS[i],
         width: 240,
         height: 384,
@@ -49,11 +49,8 @@ class NewGame extends Game{
 
     super.draw();
 
-    let normCameraY = Core.camera.y / 384 >> 0;
-    let normCameraHeight = (Core.camera.y + Core.camera.h) / 384 >> 0;
-
-    for (let i = normCameraY; i <= normCameraHeight; i++) {
-      this.maps[i % this.maps.length].draw();
+    for (let i = Core.camera.normalizedMapY; i <= Core.camera.normalizedMapHeight; i++) {
+      Core.maps[i % Core.maps.length].draw();
     };
 
     this.player.draw();
@@ -63,13 +60,11 @@ class NewGame extends Game{
   update(){
     super.update();
 
-    for (let i = 0; i < this.maps.length; i++) {
-      this.maps[i].update();
+    for (let i = Core.camera.normalizedMapY; i <= Core.camera.normalizedMapHeight; i++) {
+      Core.maps[i % Core.maps.length].update();
     };
 
     this.player.update();
-
-    this.maps[(this.player.y / 384 >> 0) % this.maps.length].checkCollision(this.player);
 
   }
 

@@ -63,9 +63,6 @@ export class Tilemap{
 
       if(this.tileIsSolid(w * 16, h * 16)){
 
-        Core.ctx.fillStyle = '#ffe88d';
-        Core.ctx.fillRect(((w * 16)) - Core.camera.x, ((h * 16)) - Core.camera.y, 16, 16);
-
         object.shape.pos.x = object.nextPosition.x;
         object.shape.pos.y = object.nextPosition.y;
 
