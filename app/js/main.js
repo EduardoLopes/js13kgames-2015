@@ -13,6 +13,7 @@ class NewGame extends Game{
     super(options);
 
     Core.maps = [];
+    this.lastMapIndex = 0;
 
     this.player = new Player({
         x: 32,
@@ -43,6 +44,20 @@ class NewGame extends Game{
 
     };
 
+    for (let i = 0; i <= 2; i++) {
+
+        for(let h = 0; h < Core.maps[i % Core.maps.length].rows; ++h) {
+          for(let w = 0; w < Core.maps[i % Core.maps.length].cols; ++w) {
+
+            let index = Core.maps[i % Core.maps.length].cols * h + w;
+
+            Core.pathfinderMap.set(w, h, Core.maps[i % Core.maps.length].map[index]);
+
+          }
+        }
+
+    };
+
   }
 
   draw(){
@@ -59,6 +74,25 @@ class NewGame extends Game{
 
   update(){
     super.update();
+
+    if(this.lastMapIndex != Core.camera.normalizedMapY){
+      this.lastMapIndex = Core.camera.normalizedMapY;
+
+      for (let i = Core.camera.normalizedMapY; i <= Core.camera.normalizedMapHeight; i++) {
+
+        for(let h = 0; h < Core.maps[i % Core.maps.length].rows; ++h) {
+          for(let w = 0; w < Core.maps[i % Core.maps.length].cols; ++w) {
+
+            let index = Core.maps[i % Core.maps.length].cols * h + w;
+
+            Core.pathfinderMap.set(w, h, Core.maps[i % Core.maps.length].map[index]);
+
+          }
+        }
+
+      };
+
+    }
 
     for (let i = Core.camera.normalizedMapY; i <= Core.camera.normalizedMapHeight; i++) {
       Core.maps[i % Core.maps.length].update();
