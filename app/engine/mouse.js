@@ -9,6 +9,7 @@ export class Mouse{
     this.lastClick = new Vector2(32, 16);
     this.down = false;
     this.rect = null;
+    this.justPressed = false;
 
     Core.canvas.addEventListener('mousemove',function(e){
 
@@ -20,14 +21,15 @@ export class Mouse{
 
       this.setMousePosition(e);
       this.down = true;
+      this.justPressed = true;
+      this.lastClick.x = this.screen.x;
+      this.lastClick.y = this.screen.y;
 
     }.bind(this));
 
     Core.canvas.addEventListener('mouseup',function(e){
 
       this.setMousePosition(e);
-      this.lastClick.x = this.screen.x;
-      this.lastClick.y = this.screen.y;
       this.down = false;
 
     }.bind(this));

@@ -14,8 +14,8 @@ class NewGame extends Game{
     this.lastMapIndex = 0;
 
     this.player = new Player({
-        x: 32,
-        y: 16,
+        x: 64,
+        y: 128,
         width: 16,
         height: 16
     });
@@ -42,14 +42,14 @@ class NewGame extends Game{
 
     };
 
-    for (let i = 0; i <= 2; i++) {
+    for (let i = 0; i < 2; i++) {
 
-        for(let h = 0; h < Core.maps[i % Core.maps.length].rows; ++h) {
-          for(let w = 0; w < Core.maps[i % Core.maps.length].cols; ++w) {
+        for(let h = Core.maps[i].rows * i; h < Core.maps[i].rows * (i + 1); ++h) {
+          for(let w = 0; w < Core.maps[i].cols; ++w) {
 
-            let index = Core.maps[i % Core.maps.length].cols * h + w;
+            let index = Core.maps[i].cols * (h - ( Core.maps[i].rows * i )) + w;
 
-            //Core.pathfinderMap.set(w, h, Core.maps[i % Core.maps.length].map[index]);
+            Core.pathfinderGrid.setWalkableAt(w, h, Core.maps[i].map[index] == 0);
 
           }
         }
@@ -68,35 +68,61 @@ class NewGame extends Game{
 
     this.player.draw();
 
+    //path finder grid debug
+/*    for(let h = 0; h < Core.pathfinderGrid.nodes.length; ++h) {
+      for(let w = 0; w < Core.pathfinderGrid.nodes[h].length; ++w) {
+
+        if(!Core.pathfinderGrid.nodes[h][w].walkable){
+          Core.ctx.fillStyle = '#ff006c';
+          Core.ctx.fillRect((w * 16) - Core.camera.x, ((h * 16) - Core.camera.y) + Core.camera.normalizedMapY * 384, 16, 16);
+
+        }
+        Core.ctx.font = '7px normal'
+        Core.ctx.fillStyle = '#000';
+
+        //let norm = (Core.camera.normalizedMapY * 24);
+
+        //Core.ctx.fillText(15 * (h + norm) + w, (w * 16) - Core.camera.x, ((((h + norm) * 16) - Core.camera.y)) + 5, 16, 16);
+
+      }
+    }*/
+
   }
 
   update(){
     super.update();
-
-    if(this.lastMapIndex != Core.camera.normalizedMapY){
-      this.lastMapIndex = Core.camera.normalizedMapY;
-
+    Core.pathfinderDirty = false;
+    if(this.lastMapIndex != Core.camera.normalizedMapHeight){
+      this.lastMapIndex = Core.camera.normalizedMapHeight;
+      let indexPosition = 0;
+      Core.pathfinderDirty = true;
       for (let i = Core.camera.normalizedMapY; i <= Core.camera.normalizedMapHeight; i++) {
 
-        for(let h = 0; h < Core.maps[i % Core.maps.length].rows; ++h) {
+        for(let h = Core.maps[i % Core.maps.length].rows * indexPosition; h < Core.maps[i % Core.maps.length].rows * (indexPosition + 1); ++h) {
           for(let w = 0; w < Core.maps[i % Core.maps.length].cols; ++w) {
 
-            let index = Core.maps[i % Core.maps.length].cols * h + w;
+            let index = Core.maps[i % Core.maps.length].cols * (h - ( Core.maps[i % Core.maps.length].rows * indexPosition )) + w;
 
-            //Core.pathfinderMap.set(w, h, Core.maps[i % Core.maps.length].map[index]);
+            Core.pathfinderGrid.setWalkableAt(w, h, Core.maps[i % Core.maps.length].map[index] == 0);
 
           }
         }
 
+        indexPosition++;
+
       };
 
     }
+
+
 
     for (let i = Core.camera.normalizedMapY; i <= Core.camera.normalizedMapHeight; i++) {
       Core.maps[i % Core.maps.length].update();
     };
 
     this.player.update();
+
+    Core.mouse.justPressed = false;
 
   }
 

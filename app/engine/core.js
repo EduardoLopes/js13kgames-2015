@@ -1,5 +1,5 @@
 export const Core = {};
-
+const PF = require('pathfinding');
 
 Core.ctx = null;
 Core.canvas = null;
@@ -8,4 +8,7 @@ Core.camera = null;
 Core.keys = [];
 Core.maps = [];
 Core.mouse = [];
-Core.pathfinderMap = [];
+Core.pathfinderGrid = new PF.Grid(15, 48);
+Core.pathfinder = new PF.AStarFinder({
+
+});

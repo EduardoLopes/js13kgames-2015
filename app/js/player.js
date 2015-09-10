@@ -3,6 +3,7 @@ import {BasicObject} from '../engine/BasicObject';
 import {angle} from '../engine/angle';
 import {lerp} from '../engine/lerp';
 import {distance} from '../engine/distance';
+const PF = require('pathfinding');
 
 
 
@@ -15,6 +16,8 @@ export class Player extends BasicObject{
     this.goingUpOrDown = 'up';
     this.angleToGo = angle(this.x + (this.width / 2), this.y + (this.height / 2), Core.mouse.lastClick.x, Core.mouse.lastClick.y);
     this.speed = 10;
+    this.path = [];
+    this.pathNormalizedMapY = Core.camera.normalizedMapY;
   }
 
   draw(){
@@ -26,22 +29,41 @@ export class Player extends BasicObject{
 
   moveTo(position){
 
-    this.angleToGo = angle(this.x + (this.width / 2), this.y + (this.height / 2), Core.mouse.lastClick.x, Core.mouse.lastClick.y);
+    if(this.path.length == 0) return false;
+
+    var toX = (this.path[0][0] * 16) + (this.width / 2);
+    var toY = (((this.path[0][1] + this.pathNormalizedMapY * 24) * 16) + (this.height / 2));
+
+    //console.log(toX, toY, toY - (Core.camera.normalizedMapY * Core.camera.h), (Core.camera.normalizedMapY * Core.camera.h));
+
+/*    var toX = Core.mouse.lastClick.x;
+    var toY = Core.mouse.lastClick.y;*/
+
+    //console.log(toX, toY);
+
+    Core.ctx.fillStyle = '#000';
+    Core.ctx.fillRect(toX*16, toY* 16, 16, 16)
+
+    this.angleToGo = angle(this.x + (this.width / 2), this.y + (this.height / 2), toX, toY);
 
       let x = Math.cos(this.angleToGo) * this.speed;
       let y = Math.sin(this.angleToGo) * this.speed;
 
-      if(distance(this.x + (this.width / 2), this.y + (this.height / 2), Core.mouse.lastClick.x, Core.mouse.lastClick.y) >= this.speed){
+      if(distance(this.x + (this.width / 2), this.y + (this.height / 2), toX, toY) >= this.speed){
 
         this.nextPosition.x += x;
         this.nextPosition.y += y;
         this.speed = 5;
 
       } else {
-        this.nextPosition.x = position.x - (this.width / 2);
-        this.nextPosition.y = position.y - (this.height / 2);
+
+        this.nextPosition.x = toX - (this.width / 2);
+        this.nextPosition.y = toY - (this.height / 2);
         this.speed = 0;
+        this.path.shift();
       }
+
+      //console.log(this.nextPosition.x, this.nextPosition.y);
 
   }
 
@@ -64,6 +86,32 @@ export class Player extends BasicObject{
     this.nextPosition.y = Math.max(this.nextPosition.y, Core.camera.y);
 
     Core.maps[Math.floor(this.y / 384) % Core.maps.length].checkCollision(this);
+
+    this.playerYPos = Core.camera.normalizedMapY;
+
+    if(Core.mouse.justPressed){
+      var gridBackup = Core.pathfinderGrid.clone();
+      this.pathNormalizedMapY = Core.camera.normalizedMapY;
+      this.path = Core.pathfinder.findPath(
+        ((this.x) / 16 >> 0),
+        ((this.y) / 16 >> 0) - ((Core.camera.normalizedMapY * 24)),
+        ((Core.mouse.lastClick.x) / 16 >> 0),
+        ((Core.mouse.lastClick.y) / 16 >> 0) - ((Core.camera.normalizedMapY * 24)),
+        gridBackup
+      );
+      //console.log(Core.camera.normalizedMapHeight +  Core.camera.normalizedMapY);
+      if(this.path.length != 0) {
+        this.path = PF.Util.smoothenPath(gridBackup, this.path);
+      }
+
+    }
+    //path finder debug
+    //Core.ctx.fillStyle = '#e2f36e';
+/*    for (var i = 0; i < this.path.length; i++) {
+
+      Core.ctx.fillRect(((this.path[i][0] * 16)) - Core.camera.x, ((this.path[i][1] * 16)) - Core.camera.y + ((this.pathNormalizedMapY * 24) * 16), 16, 16)
+
+    };*/
 
     this.moveTo(Core.mouse.lastClick);
 
