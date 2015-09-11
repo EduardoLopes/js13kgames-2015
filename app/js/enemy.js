@@ -25,6 +25,8 @@ export class Enemy extends BasicObject{
 
   checkBulletCollisionAgainstPlayer(){
 
+    if(this.bullet.alive == false) return;
+
     this.bullet.shape.pos.x = this.bullet.nextPosition.x;
     this.bullet.shape.pos.y = this.bullet.nextPosition.y;
 
@@ -65,7 +67,7 @@ export class Enemy extends BasicObject{
 
     this.bullet.update();
 
-    if(distance(this.x + (this.width / 2), this.y + (this.height / 2), Core.player.x + (Core.player.width / 2), Core.player.y + (Core.player.height / 2)) < 64 && this.bullet.alive == false){
+    if(distance(this.x + (this.width / 2), this.y + (this.height / 2), Core.player.x + (Core.player.width / 2), Core.player.y + (Core.player.height / 2)) < 128 && this.bullet.alive == false){
 
       this.bullet.angle = angle(this.x + (this.width / 2), this.y + (this.height / 2), Core.player.x + (Core.player.width / 2), Core.player.y + (Core.player.height / 2));
       this.bullet.nextPosition.x = this.x + (4);
