@@ -18,13 +18,9 @@ export class BasicObject{
 
   draw(){
 
-
-
   }
 
   update(){
-
-
 
   }
 }

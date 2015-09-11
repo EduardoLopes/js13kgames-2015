@@ -52,8 +52,8 @@ export class Tilemap{
 
   tileIsSolid(x, y){
 
-    x = (x - this.x) / this.tilesize >> 0;
-    y = (y - this.y) / this.tilesize >> 0;
+    x = (x) / this.tilesize >> 0;
+    y = (y) / this.tilesize >> 0;
 
     return this.map[this.cols * y + x] > 0;
 
@@ -61,7 +61,7 @@ export class Tilemap{
 
     checkTileCollision(w, h, object){
 
-      if(this.tileIsSolid(w * 16, h * 16)){
+      if(this.tileIsSolid((w * 16) - this.x, (h * 16) - this.y)){
 
         object.shape.pos.x = object.nextPosition.x;
         object.shape.pos.y = object.nextPosition.y;

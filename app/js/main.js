@@ -1,7 +1,7 @@
 import {Game} from '../engine/game';
 import {Core} from '../engine/core';
 import {Vector2} from '../engine/vector2';
-import {Tilemap} from '../engine/tilemap';
+import {MapPiece} from './mapPiece';
 import {BasicObject} from '../engine/BasicObject';
 import {MAPS} from './maps';
 import {Player} from './player';
@@ -30,7 +30,7 @@ class NewGame extends Game{
 
     for (let i = 0; i < MAPS.length; i++) {
 
-      Core.maps[i] = new Tilemap({
+      Core.maps[i] = new MapPiece({
         map: MAPS[i],
         width: 240,
         height: 384,
