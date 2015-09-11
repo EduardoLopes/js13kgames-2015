@@ -61,7 +61,7 @@ export class Tilemap{
 
     checkTileCollision(w, h, object, separate){
 
-      if(this.tileIsSolid((w * 16) - this.x, (h * 16) - this.y)){
+      if(this.tileIsSolid((w * 16) - this.x, (h * 16) - this.y) && (object.colliding == false || separate == true)){
 
         object.shape.pos.x = object.nextPosition.x;
         object.shape.pos.y = object.nextPosition.y;
@@ -69,14 +69,12 @@ export class Tilemap{
         Tilemap.tileShape.pos.x = w * 16;
         Tilemap.tileShape.pos.y = h * 16;
 
-        SAT.testPolygonPolygon(object.shape, Tilemap.tileShape, Tilemap.collisionResponse);
+        object.colliding = SAT.testPolygonPolygon(object.shape, Tilemap.tileShape, Tilemap.collisionResponse);
 
         if(separate){
           object.nextPosition.x -= Tilemap.collisionResponse.overlapV.x;
           object.nextPosition.y -= Tilemap.collisionResponse.overlapV.y;
         }
-
-        object.colliding = Tilemap.collisionResponse.overlapV.x != 0 || Tilemap.collisionResponse.overlapV.y != 0;
 
         Tilemap.collisionResponse.clear();
 
@@ -97,7 +95,7 @@ export class Tilemap{
     let minY = Math.floor(((object.nextPosition.y)) / 16);
     let maxY = Math.floor(((object.nextPosition.y) + 16) / 16);
 
-    if(object.goingUpOrDown == 'up'){
+    if(object.velocity.y <= 0){
 
       for (let h = maxY; h >= minY; h--) {
         for (let w = maxX; w >= minX; w--) {
@@ -107,7 +105,7 @@ export class Tilemap{
         }
       }
 
-    } else if(object.goingUpOrDown == 'down'){
+    } else if(object.velocity.y >= 0){
 
       for (let h = minY; h <= maxY; h++) {
         for (let w = minX; w <= maxX; w++) {

@@ -10,6 +10,5 @@ Core.maps = [];
 Core.mouse = [];
 Core.player = null;
 Core.pathfinderGrid = new PF.Grid(15, 48);
-Core.pathfinder = new PF.AStarFinder({
-
-});
+Core.pathfinder = new PF.AStarFinder();
+Core.resetGame = null;

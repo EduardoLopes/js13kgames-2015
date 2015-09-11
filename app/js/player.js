@@ -5,8 +5,6 @@ import {lerp} from '../engine/lerp';
 import {distance} from '../engine/distance';
 const PF = require('pathfinding');
 
-
-
 export class Player extends BasicObject{
   constructor(options){
 
@@ -24,6 +22,13 @@ export class Player extends BasicObject{
     Core.ctx.fillStyle = '#ff006c';
     Core.ctx.fillRect(this.x - Core.camera.x, this.y - Core.camera.y, this.width, this.height);
 
+  }
+
+  reset(){
+    this.path = [];
+    this.pathNormalizedMapY = 0;
+    this.speed = 0;
+    this.angleToGo = 0;
   }
 
   moveTo(position){
@@ -45,13 +50,13 @@ export class Player extends BasicObject{
 
     this.angleToGo = angle(this.x + (this.width / 2), this.y + (this.height / 2), toX, toY);
 
-      let x = Math.cos(this.angleToGo) * this.speed;
-      let y = Math.sin(this.angleToGo) * this.speed;
+      this.velocity.x = Math.cos(this.angleToGo) * this.speed;
+      this.velocity.y = Math.sin(this.angleToGo) * this.speed;
 
       if(distance(this.x + (this.width / 2), this.y + (this.height / 2), toX, toY) >= this.speed){
 
-        this.nextPosition.x += x;
-        this.nextPosition.y += y;
+        this.nextPosition.x += this.velocity.x;
+        this.nextPosition.y += this.velocity.y;
         this.speed = 5;
 
       } else {

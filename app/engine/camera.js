@@ -10,6 +10,14 @@ export class Camera extends Rectangle{
     this.normalizedMapY = 0;
   }
 
+  reset(){
+    this.cameraMaxY = 0;
+    this.normalizedByMapHeight = 0;
+    this.normalizedMapY = 0;
+    this.x = 0;
+    this.y = 0;
+  }
+
   setObjectToFollow(object){
     this.follow = object;
   }

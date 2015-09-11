@@ -27,6 +27,24 @@ class NewGame extends Game{
 
     this.initMaps();
 
+    Core.resetGame = this.resetGame;
+
+  }
+
+  resetGame(){
+
+    for (let i = 0; i < MAPS.length; i++) {
+
+      Core.maps[i].onResetGame(0, 384 * i);
+
+    }
+
+    this.player.nextPosition.x = 64;
+    this.player.nextPosition.y = 128;
+
+    Core.camera.reset();
+    this.player.reset();
+
   }
 
   initMaps(){

@@ -49,9 +49,14 @@ export class MapPiece extends Tilemap{
 
   }
 
-  resetMap(){
+  onResetGame(x, y){
+    this.x = x;
+    this.y = y;
 
-    this.y += (this.height * 4);
+    this.resetEnemies();
+  }
+
+  resetEnemies(){
 
     for (let i = 0; i < this.enemies.length; i++) {
 
@@ -59,6 +64,7 @@ export class MapPiece extends Tilemap{
 
       this.enemies[i].x = (emptyTile.x * 16) + this.x;
       this.enemies[i].y = (emptyTile.y * 16) + this.y;
+      this.enemies[i].bullet.setDead();
 
     };
 
@@ -81,7 +87,10 @@ export class MapPiece extends Tilemap{
     };
 
     if(Core.camera.y > this.height + this.y){
-      this.resetMap();
+
+      this.y += (this.height * 4);
+
+      this.resetEnemies();
     }
 
   }
