@@ -111,7 +111,7 @@ export class Mouse{
     this.x = (enemy.x - Core.camera.x) + (enemy.width / 2);
     this.y = (enemy.y - Core.camera.y) + (enemy.height / 2);
 
-    if(distance(enemy.x + (enemy.width / 2), enemy.y + (enemy.height / 2), this.screen.x, this.screen.y) > 14)  {
+    if(distance(enemy.x + (enemy.width / 2), enemy.y + (enemy.height / 2), this.screen.x, this.screen.y) > 20)  {
       this.state = 'Free';
     }
 

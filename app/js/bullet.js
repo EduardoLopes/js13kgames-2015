@@ -50,8 +50,8 @@ export class Bullet extends BasicObject{
 
     this.colliding = false;
 
-    this.velocity.x = Math.cos(this.angle) * 1 ;
-    this.velocity.y = Math.sin(this.angle) * 1 ;
+    this.velocity.x = Math.cos(this.angle) * 2;
+    this.velocity.y = Math.sin(this.angle) * 2;
 
     this.nextPosition.x += (this.velocity.x);
     this.nextPosition.y += (this.velocity.y);

@@ -39,6 +39,10 @@ export class Enemy extends BasicObject{
 
   }
 
+  kill(){
+    this.visible = this.active = false;
+  }
+
   draw(){
 
     if(this.visible == false) return;

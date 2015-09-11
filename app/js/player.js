@@ -6,6 +6,8 @@ import {distance} from '../engine/distance';
 import {Bullet} from './bullet';
 const PF = require('pathfinding');
 
+const SAT = require('../engine/sat/SAT.js');
+
 export class Player extends BasicObject{
   constructor(options){
 
@@ -29,11 +31,13 @@ export class Player extends BasicObject{
 
   shoot(x, y){
 
+    if(this.bullet.alive == false){
       this.bullet.angle = angle(this.x + (this.width / 2), this.y + (this.height / 2), x, y);
       this.bullet.nextPosition.x = this.x + (4);
       this.bullet.nextPosition.y = this.y + (4);
 
       this.bullet.setAlive();
+    }
 
   }
 
@@ -93,6 +97,29 @@ export class Player extends BasicObject{
 
   }
 
+  checkBulletCollisionAgainstEnemy(){
+
+    for (let i = 0; i < Core.maps[Math.floor(this.bullet.y / 384) % Core.maps.length].enemies.length; i++) {
+      let enemy = Core.maps[Math.floor(this.bullet.y / 384) % Core.maps.length].enemies[i];
+
+      enemy.shape.pos.x = enemy.x;
+      enemy.shape.pos.y = enemy.y;
+
+      this.bullet.shape.pos.x = this.bullet.nextPosition.x;
+      this.bullet.shape.pos.y = this.bullet.nextPosition.y;
+
+      let collide = SAT.testPolygonPolygon(this.bullet.shape, enemy.shape, Player.bulletCollisionResponse);
+
+      if(collide && enemy.visible){
+        enemy.kill();
+        this.bullet.setDead();
+      }
+
+      Player.bulletCollisionResponse.clear();
+    }
+
+  }
+
   update(){
 
     this.bullet.update();
@@ -117,7 +144,7 @@ export class Player extends BasicObject{
 
     this.playerYPos = Core.camera.normalizedMapY;
 
-    if(Core.mouse.justPressed){
+    if(Core.mouse.justPressed && Core.mouse.state == 'Free'){
       var gridBackup = Core.pathfinderGrid.clone();
       this.pathNormalizedMapY = Core.camera.normalizedMapY;
       this.path = Core.pathfinder.findPath(
@@ -143,5 +170,9 @@ export class Player extends BasicObject{
 
     this.moveTo(Core.mouse.lastClick);
 
+    this.checkBulletCollisionAgainstEnemy();
+
   }
 }
+
+Player.bulletCollisionResponse = new SAT.Response();
