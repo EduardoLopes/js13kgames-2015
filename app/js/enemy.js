@@ -41,6 +41,8 @@ export class Enemy extends BasicObject{
 
   draw(){
 
+    if(this.visible == false) return;
+
     this.bullet.draw();
 
     Core.ctx.fillStyle = '#f52dee';
@@ -54,11 +56,9 @@ export class Enemy extends BasicObject{
   }
 
   update(){
-    //console.log(Core.mouse.screen);
-/*    if(distance(this.x, this.y, Core.mouse.screen.x - Core.camera.x, Core.mouse.screen.y - Core.camera.y) < 20){
-      console.log('a');
-    }
-*/
+
+  if(this.active == false) return;
+
     this.bullet.update();
 
     if(distance(this.x + (this.width / 2), this.y + (this.height / 2), Core.player.x + (Core.player.width / 2), Core.player.y + (Core.player.height / 2)) < 64 && this.bullet.alive == false){

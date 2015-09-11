@@ -27,6 +27,11 @@ export class MapPiece extends Tilemap{
         height: 16
       });
 
+      if(this.y == 0){
+        this.enemies[i].active = false;
+        this.enemies[i].visible = false;
+      }
+
     };
 
   }
@@ -53,6 +58,8 @@ export class MapPiece extends Tilemap{
     this.x = x;
     this.y = y;
 
+    if(this.y == 0) return;
+
     this.resetEnemies();
   }
 
@@ -64,6 +71,8 @@ export class MapPiece extends Tilemap{
 
       this.enemies[i].x = (emptyTile.x * 16) + this.x;
       this.enemies[i].y = (emptyTile.y * 16) + this.y;
+      this.enemies[i].active = true;
+      this.enemies[i].visible = true;
       this.enemies[i].bullet.setDead();
 
     };
