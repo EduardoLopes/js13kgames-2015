@@ -48,17 +48,18 @@ export class Game{
 
     requestAnimationFrame(this.step.bind(this));
 
+
   }
 
   draw(){
 
     this.ctx.clearRect(0,0, this.screen.size.x, this.screen.size.y);
-
   }
 
   update(){
 
     Core.camera.update();
+    Core.mouse.update();
 
   }
 
@@ -66,6 +67,8 @@ export class Game{
 
     this.draw();
     this.update();
+    //draw mouse above everything
+    Core.mouse.draw();
 
     requestAnimationFrame(this.step.bind(this));
 

@@ -1,5 +1,6 @@
 import {Core} from './core';
-import {Vector2} from '../engine/vector2';
+import {Vector2} from './vector2';
+import {BasicObject} from './BasicObject';
 
 export class Mouse{
   constructor(x, y){
@@ -10,6 +11,8 @@ export class Mouse{
     this.down = false;
     this.rect = null;
     this.justPressed = false;
+    this.maxSize = 10;
+    this.size = 10;
 
     Core.canvas.addEventListener('mousemove',function(e){
 
@@ -45,4 +48,30 @@ export class Mouse{
     this.screen.y = this.y + Core.camera.y;
 
   }
+
+  draw(){
+
+    Core.ctx.strokeStyle = '#181818';
+    Core.ctx.fillStyle = 'rgba(255,255,255,0.2)';
+    Core.ctx.beginPath();
+    Core.ctx.arc(this.x, this.y, this.size, Math.PI * 2, 0, false);
+    //Core.ctx.fillRect(this.x, this.y, 16, 16);
+    Core.ctx.closePath();
+    Core.ctx.stroke();
+    Core.ctx.fill();
+  }
+
+  update(){
+
+    if(this.justPressed){
+      this.size = 2;
+    }
+
+
+      this.size += (this.maxSize - this.size) * 0.2;
+
+
+  }
+
+
 }
