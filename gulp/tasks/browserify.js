@@ -46,7 +46,7 @@ gulp.task('browserify', function() {
 
 });
 
-gulp.task('browserify:build', function() {
+gulp.task('browserify:build', ['clean'], function() {
 
   var bundler = browserify()
   .transform(babelify)

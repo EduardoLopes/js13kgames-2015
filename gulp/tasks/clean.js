@@ -11,7 +11,7 @@ gulp.task('clean', function(cb) {
 
 });
 
-gulp.task('post-clean', ['closure-compiler'], function(cb) {
+gulp.task('post-clean', ['replace'], function(cb) {
 
   return del([dist + '/js/main.js', dist + '/js/main.closure.js'], cb);
 

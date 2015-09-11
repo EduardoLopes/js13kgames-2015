@@ -5,10 +5,10 @@ const dist = config.dir.dist;
 
 
 gulp.task('closure-compiler', ['htmlbuild'], function() {
-  return gulp.src(dist + '/js/main.js')
+  return gulp.src(dist + '/js/main.min.js')
     .pipe(closureCompiler({
       compilerPath: 'node_modules/closure-compiler/lib/vendor/compiler.jar',
-      fileName: 'main.min.js',
+      fileName: 'main.closure.js',
       compilerFlags: {
         compilation_level: 'ADVANCED_OPTIMIZATIONS',
         // .call is super important, otherwise Closure Library will not work in strict mode.
