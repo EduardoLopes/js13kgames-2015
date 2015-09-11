@@ -20,6 +20,9 @@ class NewGame extends Game{
         height: 16
     });
 
+    //global player reference
+    Core.player = this.player;
+
     Core.camera.setObjectToFollow(this.player);
 
     this.initMaps();

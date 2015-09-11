@@ -18,7 +18,7 @@ export class MapPiece extends Tilemap{
     for (let i = 0; i < 3; i++) {
 
       let emptyTile = this.findEmptyTile();
-      console.log(emptyTile);
+
       this.enemies[i] = new Enemy({
         x: (emptyTile.x * 16) + this.x,
         y: (emptyTile.y * 16) + this.y,
@@ -34,7 +34,7 @@ export class MapPiece extends Tilemap{
 
     let random_x = Random.int(0, this.cols - 1);
     let random_y = Random.int(0, this.rows - 1);
-    console.log(random_x * 16, random_y * 16);
+
     if(this.tileIsSolid(random_x * 16, random_y * 16) == false){
       return {x: random_x, y: random_y};
     } else {

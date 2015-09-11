@@ -59,7 +59,7 @@ export class Tilemap{
 
   }
 
-    checkTileCollision(w, h, object){
+    checkTileCollision(w, h, object, separate){
 
       if(this.tileIsSolid((w * 16) - this.x, (h * 16) - this.y)){
 
@@ -71,16 +71,26 @@ export class Tilemap{
 
         SAT.testPolygonPolygon(object.shape, Tilemap.tileShape, Tilemap.collisionResponse);
 
-        object.nextPosition.x -= Tilemap.collisionResponse.overlapV.x;
-        object.nextPosition.y -= Tilemap.collisionResponse.overlapV.y;
+        if(separate){
+          object.nextPosition.x -= Tilemap.collisionResponse.overlapV.x;
+          object.nextPosition.y -= Tilemap.collisionResponse.overlapV.y;
+        }
+
+        object.colliding = Tilemap.collisionResponse.overlapV.x != 0 || Tilemap.collisionResponse.overlapV.y != 0;
 
         Tilemap.collisionResponse.clear();
 
       }
+      //debug stuff
+      /*Core.ctx.fillStyle = 'rgba(15,200,15, 0.2)';
+      Core.ctx.fillRect((w * 16) - Core.camera.x, (h * 16) - Core.camera.y, 16, 16);
+
+      Core.ctx.fillStyle = 'rgba(122,255,255, 0.2)';
+      Core.ctx.fillRect(object.nextPosition.x - Core.camera.x, object.nextPosition.y - Core.camera.y, object.width, object.height);*/
 
   }
 
-  checkCollision(object){
+  checkCollision(object, separate = true){
 
     let minX = Math.floor(((object.nextPosition.x)) / 16);
     let maxX = Math.floor(((object.nextPosition.x) + 16) / 16);
@@ -92,7 +102,7 @@ export class Tilemap{
       for (let h = maxY; h >= minY; h--) {
         for (let w = maxX; w >= minX; w--) {
 
-          this.checkTileCollision(w, h, object);
+          this.checkTileCollision(w, h, object, separate);
 
         }
       }
@@ -102,15 +112,19 @@ export class Tilemap{
       for (let h = minY; h <= maxY; h++) {
         for (let w = minX; w <= maxX; w++) {
 
-          this.checkTileCollision(w, h, object);
+          this.checkTileCollision(w, h, object, separate);
 
         }
       }
 
     }
 
-    object.x = object.nextPosition.x;
-    object.y = object.nextPosition.y;
+    if(separate){
+      object.x = object.nextPosition.x;
+      object.y = object.nextPosition.y;
+    }
+
+    return object.colliding;
 
   }
 

@@ -12,7 +12,6 @@ export class Player extends BasicObject{
 
     super(options)
 
-    this.nextPosition = {x: this.x, y: this.y};
     this.goingUpOrDown = 'up';
     this.angleToGo = angle(this.x + (this.width / 2), this.y + (this.height / 2), Core.mouse.lastClick.x, Core.mouse.lastClick.y);
     this.speed = 10;

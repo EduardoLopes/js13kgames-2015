@@ -8,6 +8,7 @@ Core.camera = null;
 Core.keys = [];
 Core.maps = [];
 Core.mouse = [];
+Core.player = null;
 Core.pathfinderGrid = new PF.Grid(15, 48);
 Core.pathfinder = new PF.AStarFinder({
 
