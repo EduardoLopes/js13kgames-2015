@@ -44,7 +44,7 @@ export class Bullet extends BasicObject{
     this.nextPosition.y += (this.velocity.y);
 
 
-    if(Core.maps[Math.floor(this.y / 384) % Core.maps.length].checkCollision(this, false)){
+    if(Core.maps[Math.floor(this.nextPosition.y / 384) % Core.maps.length].checkCollision(this, false)){
       this.setDead();
     };
 

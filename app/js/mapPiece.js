@@ -1,6 +1,7 @@
 import {Tilemap} from '../engine/tilemap';
 import {Random} from '../engine/random';
 import {Enemy} from './enemy';
+import {Core} from '../engine/core';
 
 export class MapPiece extends Tilemap{
   constructor(options){
@@ -48,6 +49,21 @@ export class MapPiece extends Tilemap{
 
   }
 
+  resetMap(){
+
+    this.y += (this.height * 4);
+
+    for (let i = 0; i < this.enemies.length; i++) {
+
+      let emptyTile = this.findEmptyTile();
+
+      this.enemies[i].x = (emptyTile.x * 16) + this.x;
+      this.enemies[i].y = (emptyTile.y * 16) + this.y;
+
+    };
+
+  }
+
   draw(){
     super.draw();
 
@@ -63,6 +79,10 @@ export class MapPiece extends Tilemap{
     for (let i = 0; i < this.enemies.length; i++) {
       this.enemies[i].update();
     };
+
+    if(Core.camera.y > this.height + this.y){
+      this.resetMap();
+    }
 
   }
 }

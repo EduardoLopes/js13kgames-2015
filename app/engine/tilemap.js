@@ -130,9 +130,6 @@ export class Tilemap{
 
   update(){
 
-    if(Core.camera.y > this.height + this.y){
-      this.y += (this.height * 4);
-    }
 
   }
 
