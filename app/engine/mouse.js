@@ -115,6 +115,10 @@ export class Mouse{
       this.state = 'Free';
     }
 
+    if(this.justPressed){
+      Core.player.shoot(enemy.x + (enemy.width / 2), enemy.y + (enemy.height / 2));
+    }
+
   }
 
   draw(){

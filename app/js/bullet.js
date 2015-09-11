@@ -11,14 +11,14 @@ export class Bullet extends BasicObject{
     super(options);
 
     this.angle = 0;
-    this.enemy = options.enemy;
+    this.ownerReference = options.ownerReference;
     this.setDead();
   }
 
   setAlive(){
     this.alive = true;
-    this.nextPosition.x = this.enemy.x + (4);
-    this.nextPosition.y = this.enemy.y + (4);
+    this.nextPosition.x = this.ownerReference.x + (4);
+    this.nextPosition.y = this.ownerReference.y + (4);
     this.colliding = false;
   }
 
@@ -44,26 +44,6 @@ export class Bullet extends BasicObject{
 
   }
 
-  checkCollisionAgainstPlayer(){
-
-    //console.log(Bullet.collisionResponse.overlapV);
-    //Bullet.collisionResponse.overlapV.x = 0;
-    //Bullet.collisionResponse.overlapV.y = 0;
-
-    this.shape.pos.x = this.nextPosition.x;
-    this.shape.pos.y = this.nextPosition.y;
-
-    Core.player.shape.pos.x = Core.player.nextPosition.x;
-    Core.player.shape.pos.y = Core.player.nextPosition.y;
-
-    let collide = SAT.testPolygonPolygon(this.shape, Core.player.shape, Bullet.collisionResponse);
-
-    Bullet.collisionResponse.clear();
-
-    return collide;
-
-  }
-
   update(){
 
     if(this.alive == false) return false;
@@ -83,13 +63,5 @@ export class Bullet extends BasicObject{
     this.x = this.nextPosition.x;
     this.y = this.nextPosition.y;
 
-    if(this.checkCollisionAgainstPlayer()){
-      Core.resetGame();
-      this.setDead();
-    }
-
-
   }
 }
-
-Bullet.collisionResponse = new SAT.Response();

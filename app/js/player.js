@@ -3,6 +3,7 @@ import {BasicObject} from '../engine/BasicObject';
 import {angle} from '../engine/angle';
 import {lerp} from '../engine/lerp';
 import {distance} from '../engine/distance';
+import {Bullet} from './bullet';
 const PF = require('pathfinding');
 
 export class Player extends BasicObject{
@@ -15,9 +16,30 @@ export class Player extends BasicObject{
     this.speed = 10;
     this.path = [];
     this.pathNormalizedMapY = Core.camera.normalizedMapY;
+
+    this.bullet = new Bullet({
+      x: 0,
+      y: 0,
+      width: 8,
+      height: 8,
+      ownerReference: this
+    });
+
+  }
+
+  shoot(x, y){
+
+      this.bullet.angle = angle(this.x + (this.width / 2), this.y + (this.height / 2), x, y);
+      this.bullet.nextPosition.x = this.x + (4);
+      this.bullet.nextPosition.y = this.y + (4);
+
+      this.bullet.setAlive();
+
   }
 
   draw(){
+
+    this.bullet.draw();
 
     Core.ctx.fillStyle = '#ff006c';
     Core.ctx.fillRect(this.x - Core.camera.x, this.y - Core.camera.y, this.width, this.height);
@@ -72,6 +94,8 @@ export class Player extends BasicObject{
   }
 
   update(){
+
+    this.bullet.update();
 
 /*    if(Core.keys[38]){
       this.nextPosition.y -= 2;

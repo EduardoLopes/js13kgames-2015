@@ -4,6 +4,8 @@ import {angle} from '../engine/angle';
 import {distance} from '../engine/distance';
 import {Bullet} from './bullet';
 
+const SAT = require('../engine/sat/SAT.js');
+
 export class Enemy extends BasicObject{
   constructor(options){
 
@@ -14,10 +16,26 @@ export class Enemy extends BasicObject{
       y: 0,
       width: 8,
       height: 8,
-      enemy: this
+      ownerReference: this
     });
 
     this.goingUpOrDown = 'down';
+
+  }
+
+  checkBulletCollisionAgainstPlayer(){
+
+    this.bullet.shape.pos.x = this.bullet.nextPosition.x;
+    this.bullet.shape.pos.y = this.bullet.nextPosition.y;
+
+    Core.player.shape.pos.x = Core.player.nextPosition.x;
+    Core.player.shape.pos.y = Core.player.nextPosition.y;
+
+    let collide = SAT.testPolygonPolygon(this.bullet.shape, Core.player.shape, Enemy.bulletCollisionResponse);
+
+    Enemy.bulletCollisionResponse.clear();
+
+    return collide;
 
   }
 
@@ -32,7 +50,6 @@ export class Enemy extends BasicObject{
     }
 
     Core.ctx.fillRect(this.x - Core.camera.x, this.y - Core.camera.y, this.width, this.height);
-
 
   }
 
@@ -54,5 +71,12 @@ export class Enemy extends BasicObject{
 
     }
 
+    if(this.checkBulletCollisionAgainstPlayer()){
+      Core.resetGame();
+      this.bullet.setDead();
+    }
+
   }
 }
+
+Enemy.bulletCollisionResponse = new SAT.Response();
