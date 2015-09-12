@@ -22,6 +22,7 @@ export class Player extends BasicObject{
       y: 0,
       width: 6,
       height: 6,
+      speed: 5,
       ownerReference: this
     });
 

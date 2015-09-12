@@ -16,6 +16,7 @@ export class Enemy extends BasicObject{
       y: 0,
       width: 4,
       height: 4,
+      speed: 3,
       ownerReference: this
     });
 

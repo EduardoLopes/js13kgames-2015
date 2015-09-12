@@ -14,6 +14,7 @@ export class Bullet extends BasicObject{
     this.angle = 0;
     this.ownerReference = options.ownerReference;
     this.setDead();
+    this.speed = options.speed;
   }
 
   setAlive(){
@@ -58,8 +59,8 @@ export class Bullet extends BasicObject{
 
     this.colliding = false;
 
-    this.velocity.x = Math.cos(this.angle) * 2;
-    this.velocity.y = Math.sin(this.angle) * 2;
+    this.velocity.x = Math.cos(this.angle) * this.speed;
+    this.velocity.y = Math.sin(this.angle) * this.speed;
 
     this.nextPosition.x += (this.velocity.x);
     this.nextPosition.y += (this.velocity.y);
