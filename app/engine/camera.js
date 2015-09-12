@@ -20,6 +20,7 @@ export class Camera extends Rectangle{
     this.normalizedMapY = 0;
     this.x = 0;
     this.y = 0;
+    this._shake = 0;
   }
 
   setObjectToFollow(object){

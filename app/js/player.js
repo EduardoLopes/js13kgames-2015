@@ -4,6 +4,7 @@ import {angle} from '../engine/angle';
 import {drawCircle} from '../engine/helper';
 import {distance} from '../engine/distance';
 import {Bullet} from './bullet';
+import {Random} from '../engine/random';
 const PF = require('pathfinding');
 const SAT = require('../engine/sat/SAT.js');
 
@@ -127,6 +128,13 @@ export class Player extends BasicObject{
       if(collide && enemy.visible){
         enemy.kill();
         this.bullet.setDead();
+
+        if(enemy.x > 120) {
+          Core.camera.shake(-15);
+        } else {
+          Core.camera.shake(15);
+        }
+
       }
 
       Player.bulletCollisionResponse.clear();
