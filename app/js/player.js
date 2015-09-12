@@ -55,6 +55,7 @@ export class Player extends BasicObject{
     this.pathNormalizedMapY = 0;
     this.speed = 0;
     this.angleToGo = 0;
+    this.bullet.setDead();
   }
 
   moveTo(position){

@@ -111,11 +111,12 @@ export class Mouse{
     this.x = (enemy.x - Core.camera.x) + (enemy.width / 2);
     this.y = (enemy.y - Core.camera.y) + (enemy.height / 2);
 
-    if(distance(enemy.x + (enemy.width / 2), enemy.y + (enemy.height / 2), this.screen.x, this.screen.y) > 20)  {
+    if(distance(enemy.x + (enemy.width / 2), enemy.y + (enemy.height / 2), this.screen.x, this.screen.y) > 32 || enemy.visible == false)  {
       this.state = 'Free';
     }
 
     if(this.justPressed){
+      this.size = 10;
       Core.player.shoot(enemy.x + (enemy.width / 2), enemy.y + (enemy.height / 2));
     }
 
