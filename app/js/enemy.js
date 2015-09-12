@@ -73,6 +73,12 @@ export class Enemy extends BasicObject{
       this.bullet.nextPosition.x = this.x + (4);
       this.bullet.nextPosition.y = this.y + (4);
 
+      if(Math.cos(this.bullet.angle) > 0) {
+        Core.camera.shake(0, 5);
+      } else {
+        Core.camera.shake(1, 5);
+      }
+
       this.bullet.setAlive();
 
     }

@@ -26,5 +26,6 @@ gulp.task('replace', ['htmlbuild'], function(){
     .pipe(replace(/bullet/g, '_r'))
     .pipe(replace(/ctx/g, '_s'))
     .pipe(replace(/vector/g, '_t'))
+    .pipe(replace(/vector2/g, '_u'))
     .pipe(gulp.dest(dist + '/js/'));
 });

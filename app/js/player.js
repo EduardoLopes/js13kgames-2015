@@ -13,7 +13,6 @@ export class Player extends BasicObject{
 
     super(options)
 
-    this.goingUpOrDown = 'up';
     this.angleToGo = angle(this.x + (this.width / 2), this.y + (this.height / 2), Core.mouse.lastClick.x, Core.mouse.lastClick.y);
     this.speed = 10;
     this.path = [];
@@ -35,6 +34,12 @@ export class Player extends BasicObject{
       this.bullet.angle = angle(this.x + (this.width / 2), this.y + (this.height / 2), x, y);
       this.bullet.nextPosition.x = this.x + (4);
       this.bullet.nextPosition.y = this.y + (4);
+
+      if(Math.cos(this.bullet.angle) > 0) {
+        Core.camera.shake(0, 10);
+      } else {
+        Core.camera.shake(1, 10);
+      }
 
       this.bullet.setAlive();
     }
