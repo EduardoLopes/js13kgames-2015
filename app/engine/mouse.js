@@ -93,7 +93,7 @@ export class Mouse{
 
 
     if(Core.player.bullet.alive == false && Core.pause == false){
-      Core.ctx.fillStyle = 'rgba(255,25,25,0.2)';
+      Core.ctx.fillStyle = 'rgba(255,0,40,0.2)';
       Core.ctx.strokeStyle = '#181818';
 
       Core.ctx.strokeStyle = '#777';
@@ -104,8 +104,8 @@ export class Mouse{
       Core.ctx.stroke();
 
     } else {
-      Core.ctx.fillStyle = 'rgba(255,25,25,0.4)';
-      Core.ctx.strokeStyle = 'rgb(255,25,25)';
+      Core.ctx.fillStyle = 'rgba(255,0,40,0.4)';
+      Core.ctx.strokeStyle = '#ff0028';
     }
 
     Core.ctx.beginPath();

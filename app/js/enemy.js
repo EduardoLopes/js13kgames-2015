@@ -53,8 +53,13 @@ export class Enemy extends BasicObject{
 
     Core.ctx.fillStyle = '#f52dee';
 
-    if(distance(this.x + (this.width / 2), this.y + (this.height / 2), Core.player.x + (Core.player.width / 2), Core.player.y + (Core.player.height / 2)) < 64 && this.bullet.alive == false){
-      Core.ctx.fillStyle = '#2f3e3f';
+    if(distance(this.x + (this.width / 2), this.y + (this.height / 2), Core.player.x + (Core.player.width / 2), Core.player.y + (Core.player.height / 2)) < 128 && Core.pause == false){
+      Core.ctx.strokeStyle = 'rgba(255,0,40,0.2)';
+      Core.ctx.beginPath();
+      Core.ctx.moveTo((Core.player.x + 8) - Core.camera.x, (Core.player.y + 8) - Core.camera.y);
+      Core.ctx.lineTo((this.x + 8) - Core.camera.x, (this.y + 8) - Core.camera.y);
+      Core.ctx.closePath();
+      Core.ctx.stroke();
     }
 
     Core.ctx.fillRect(this.x - Core.camera.x, this.y - Core.camera.y, this.width, this.height);
