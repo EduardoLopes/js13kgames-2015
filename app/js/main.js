@@ -5,6 +5,8 @@ import {MapPiece} from './mapPiece';
 import {BasicObject} from '../engine/BasicObject';
 import {MAPS} from './maps';
 import {Player} from './player';
+import {Random} from '../engine/random';
+
 
 class NewGame extends Game{
   constructor(options){
@@ -93,6 +95,10 @@ class NewGame extends Game{
       Core.maps[i % Core.maps.length].draw();
     };
 
+    Core.ctx.fillStyle = '#181818';
+    Core.ctx.fillRect(0, 0, 16, Core.canvas.height);
+    Core.ctx.fillRect(Core.canvas.width - 16, 0, 16, Core.canvas.height);
+
     this.player.draw();
 
     if(Core.pause == false){
@@ -135,25 +141,28 @@ class NewGame extends Game{
       Core.ctx.fillStyle = '#eee';
       Core.ctx.font = '12pt sans-serif';
       Core.ctx.textAlign = 'center';
-      Core.ctx.fillText('HOLD TO TRY AGAIN', (Core.canvas.width / 2), (Core.canvas.height / 2) - 20);
+      Core.ctx.fillText('HOLD TO TRY AGAIN', (Core.canvas.width / 2) - Core.camera.x, (Core.canvas.height / 2) - 20);
       Core.ctx.font = '10pt sans-serif';
-      Core.ctx.fillText('Score: '+ Core.camera.y, (Core.canvas.width / 2), (Core.canvas.height / 2) + 20);
-      Core.ctx.fillText('High Score: '+ Core.highScore, (Core.canvas.width / 2), (Core.canvas.height / 2) + 40);
+      Core.ctx.fillText('Score: '+ Core.camera.y, (Core.canvas.width / 2) - Core.camera.x, (Core.canvas.height / 2) + 20);
+      Core.ctx.fillText('High Score: '+ Core.highScore, (Core.canvas.width / 2) -Core.camera.x, (Core.canvas.height / 2) + 40);
 
       if(Core.mouse.down){
         Core.timeHolder += 0.03;
+        Core.camera.shake(Random.int(0, 1), Random.int(-4 + (Core.timeHolder * 11), 4 + (Core.timeHolder * 11)));
       } else {
         Core.timeHolder += (0 - Core.timeHolder) * 0.05;
       }
 
       Core.ctx.fillStyle = '#181818';
-      Core.ctx.fillRect(0, 0, Core.canvas.width * Core.timeHolder, Core.canvas.height)
+      Core.ctx.fillRect(0, 0, (Core.canvas.width * Core.timeHolder) - Core.camera.x, Core.canvas.height)
 
       if(Core.timeHolder >= 1.2){
         Core.pause = false;
         this.resetGame();
         //Core.timeHolder = 0;
       }
+
+      Core.camera.update();
 
       return;
     }
@@ -162,10 +171,11 @@ class NewGame extends Game{
 
     if(Core.timeHolder > 0){
       Core.ctx.fillStyle = '#181818';
-      Core.ctx.fillRect(0, 0, Core.canvas.width * Core.timeHolder, Core.canvas.height)
+      Core.ctx.fillRect(0, 0, Core.canvas.width * Core.timeHolder, Core.canvas.height);
+      Core.timeHolder += (-1 - Core.timeHolder) * 0.05;
     }
 
-    Core.timeHolder += (-1 - Core.timeHolder) * 0.05;
+
 
     Core.pathfinderDirty = false;
     if(this.lastMapIndex != Core.camera.normalizedMapHeight){

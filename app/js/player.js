@@ -36,7 +36,7 @@ export class Player extends BasicObject{
       this.bullet.nextPosition.y = this.y + (4);
 
       if(Math.cos(this.bullet.angle) > 0) {
-        Core.camera.shake(0, 10);
+        Core.camera.shake(0, -10);
       } else {
         Core.camera.shake(1, 10);
       }

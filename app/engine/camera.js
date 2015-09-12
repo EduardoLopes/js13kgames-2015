@@ -30,9 +30,9 @@ export class Camera extends Rectangle{
     this._shakeDirection = d;
 
     if(d){
-      this._shake += f;
+      this._shake = f;
     } else {
-      this._shake -= f;
+      this._shake = f;
     }
 
   }
