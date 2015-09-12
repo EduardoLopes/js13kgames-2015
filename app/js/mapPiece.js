@@ -30,6 +30,7 @@ export class MapPiece extends Tilemap{
       if(this.y == 0){
         this.enemies[i].active = false;
         this.enemies[i].visible = false;
+        this.enemies[i].radius = 0;
       }
 
     };
@@ -74,6 +75,11 @@ export class MapPiece extends Tilemap{
       this.enemies[i].active = true;
       this.enemies[i].visible = true;
       this.enemies[i].bullet.setDead();
+      this.enemies[i].radius = (this.enemies[i].width / 2) + 2;
+
+      if(this.y == 0){
+        this.enemies[i].radius = 0;
+      }
 
     };
 

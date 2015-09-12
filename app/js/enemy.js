@@ -20,7 +20,7 @@ export class Enemy extends BasicObject{
       ownerReference: this
     });
 
-    this.goingUpOrDown = 'down';
+    this.radius = (this.width / 2) + 2;
 
   }
 
@@ -48,6 +48,17 @@ export class Enemy extends BasicObject{
 
   draw(){
 
+    if(this.visible == false){
+      this.radius += (0 - this.radius) * 0.4;
+    }
+
+    drawCircle(
+      (this.x + this.width / 2) - Core.camera.x,
+      (this.y + this.height / 2) - Core.camera.y,
+      this.radius, //radius
+      '#f52dee'
+    );
+
     if(this.visible == false) return;
 
     this.bullet.draw();
@@ -62,13 +73,6 @@ export class Enemy extends BasicObject{
       Core.ctx.closePath();
       Core.ctx.stroke();
     }
-
-    drawCircle(
-      (this.x + this.width / 2) - Core.camera.x,
-      (this.y + this.height / 2) - Core.camera.y,
-      (this.width / 2) + 2, //radius
-      '#f52dee'
-    );
 
     //Core.ctx.fillRect(this.x - Core.camera.x, this.y - Core.camera.y, this.width, this.height);
 
