@@ -39,7 +39,7 @@ var jsBuild = es.pipeline(
 var cssBuild = es.pipeline(
   uncss({
     html: [app + '/index.html'],
-    ignore: ['.center']
+    ignore: ['.center', 'canvas']
   }),
   autoprefixer({
     browsers: ['last 2 versions']

@@ -82,6 +82,7 @@ export class Enemy extends BasicObject{
       //this.bullet.setDead();
       Core.highScore = Math.max(Core.highScore, Core.camera.cameraMaxY);
       Core.pause = true;
+      Core.timeHolder = 0;
     }
 
   }
