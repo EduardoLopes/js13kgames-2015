@@ -10,7 +10,8 @@ export class Camera extends Rectangle{
     this.normalizedByMapHeight = 0;
     this.normalizedMapY = 0;
     this._shake = 0;
-    this._shakeDirection = 0;
+    //shake direction
+    this.sd = 0;
   }
 
   reset(){
@@ -25,15 +26,10 @@ export class Camera extends Rectangle{
     this.follow = object;
   }
 
-  shake(d, f){
+  shake(f){
 
-    this._shakeDirection = d;
-
-    if(d){
-      this._shake = f;
-    } else {
-      this._shake = f;
-    }
+    this.sd = f;
+    this._shake = f;
 
   }
 
@@ -56,17 +52,15 @@ export class Camera extends Rectangle{
     this.normalizedMapY = this.y / 384 >> 0;
     this.normalizedMapHeight = (this.y + this.h) / 384 >> 0;
 
-    if(this._shakeDirection){
+    if(this.sd > 0){
       if(this._shake <= 0){
-        this._shake = 0;
-        this.x = 0;
+        this._shake = this.x = 0;
       } else {
         this._shake += (-1 - this._shake) * 0.4;
       }
     } else {
       if(this._shake >= 0){
-        this._shake = 0;
-        this.x = 0;
+        this._shake = this.x = 0;
       } else {
         this._shake += (1 - this._shake) * 0.4;
       }

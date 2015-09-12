@@ -148,7 +148,7 @@ class NewGame extends Game{
 
       if(Core.mouse.down){
         Core.timeHolder += 0.03;
-        Core.camera.shake(Random.int(0, 1), Random.int(-4 + (Core.timeHolder * 11), 4 + (Core.timeHolder * 11)));
+        Core.camera.shake(Random.int(-4 + (Core.timeHolder * 11), 4 + (Core.timeHolder * 11)));
       } else {
         Core.timeHolder += (0 - Core.timeHolder) * 0.05;
       }
