@@ -91,14 +91,31 @@ export class Mouse{
 
   drawLocked(){
 
-    Core.ctx.strokeStyle = '#181818';
-    Core.ctx.fillStyle = 'rgba(255,25,25,0.2)';
+
+    if(Core.player.bullet.alive == false && Core.pause == false){
+      Core.ctx.fillStyle = 'rgba(255,25,25,0.2)';
+      Core.ctx.strokeStyle = '#181818';
+
+      Core.ctx.strokeStyle = '#777';
+      Core.ctx.beginPath();
+      Core.ctx.moveTo((Core.player.x + 8) - Core.camera.x, (Core.player.y + 8) - Core.camera.y);
+      Core.ctx.lineTo(this.x, this.y);
+      Core.ctx.closePath();
+      Core.ctx.stroke();
+
+    } else {
+      Core.ctx.fillStyle = 'rgba(255,25,25,0.4)';
+      Core.ctx.strokeStyle = 'rgb(255,25,25)';
+    }
+
     Core.ctx.beginPath();
     Core.ctx.arc(this.x, this.y, this.size, Math.PI * 2, 0, false);
     //Core.ctx.fillRect(this.x, this.y, 16, 16);
     Core.ctx.closePath();
     Core.ctx.stroke();
     Core.ctx.fill();
+
+
 
   }
 
@@ -115,7 +132,7 @@ export class Mouse{
       this.state = 'Free';
     }
 
-    if(this.justPressed){
+    if(this.justPressed && Core.player.bullet.alive == false){
       this.size = 10;
       Core.player.shoot(enemy.x + (enemy.width / 2), enemy.y + (enemy.height / 2));
     }
