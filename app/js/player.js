@@ -27,6 +27,13 @@ export class Player extends BasicObject{
       color: Core.colors.pb,
       ownerReference: this
     });
+
+    this.bulletParticle = {
+      x: 0,
+      y: 0,
+      radius: 0
+    };
+
     this.pa = 0;//particle angle
 
     this.radius = (this.width / 2) + 2;
@@ -37,8 +44,8 @@ export class Player extends BasicObject{
 
     if(this.bullet.alive == false){
       this.bullet.angle = angle(this.x + (this.width / 2), this.y + (this.height / 2), x, y);
-      this.bullet.nextPosition.x = this.x + (4);
-      this.bullet.nextPosition.y = this.y + (4);
+      this.bulletParticle.x = this.bullet.nextPosition.x = this.x + (4);
+      this.bulletParticle.y = this.bullet.nextPosition.y = this.y + (4);
 
       if(Math.cos(this.bullet.angle) > 0) {
         Core.camera.shake(-10);
@@ -71,6 +78,31 @@ export class Player extends BasicObject{
     };
 
     this.bullet.draw();
+
+    this.bullet.angle
+
+    if(this.bullet.alive){
+
+      this.bulletParticle.x += Math.cos(this.bullet.angle - Math.PI) * 2;
+      this.bulletParticle.y += Math.sin(this.bullet.angle - Math.PI) * 2;
+
+      drawCircle(
+        (this.bulletParticle.x - Core.camera.x),
+        (this.bulletParticle.y - Core.camera.y),
+        Math.max(0, this.bulletParticle.radius), //radius
+        Core.colors.pb
+      );
+
+      this.bulletParticle.radius += (-1 - this.bulletParticle.radius) * 0.1;
+
+      if(this.bulletParticle.radius <= 0){
+        this.bulletParticle.radius = 4;
+        this.bulletParticle.x = this.bullet.x + (4);
+        this.bulletParticle.y = this.bullet.y + (4);
+      }
+
+    }
+
 
     /*Core.ctx.fillStyle = '#BF9FD4';
     Core.ctx.fillRect(this.x - Core.camera.x, this.y - Core.camera.y, this.width, this.height);*/
