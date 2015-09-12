@@ -56,7 +56,7 @@ export class Mouse{
 
     for (let i = 0; i < Core.maps[Math.floor(this.screen.y / 384) % Core.maps.length].enemies.length; i++) {
       let enemy = Core.maps[Math.floor(this.screen.y / 384) % Core.maps.length].enemies[i];
-      if(distance(enemy.x + (enemy.width / 2), enemy.y + (enemy.height / 2), this.screen.x, this.screen.y) < 10 && enemy.visible == true)  {
+      if(distance(enemy.x + (enemy.width / 2), enemy.y + (enemy.height / 2), this.screen.x, this.screen.y) < 20 && enemy.visible == true)  {
         this.IDenemyLocked = i;
         this.state = 'Locked';
       }

@@ -78,8 +78,10 @@ export class Enemy extends BasicObject{
     }
 
     if(this.checkBulletCollisionAgainstPlayer()){
-      Core.resetGame();
-      this.bullet.setDead();
+      //Core.resetGame();
+      //this.bullet.setDead();
+      Core.highScore = Math.max(Core.highScore, Core.camera.cameraMaxY);
+      Core.pause = true;
     }
 
   }

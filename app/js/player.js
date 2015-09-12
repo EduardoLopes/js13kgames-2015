@@ -51,7 +51,7 @@ export class Player extends BasicObject{
   }
 
   reset(){
-    this.path = [];
+    this.path.length = 0;
     this.pathNormalizedMapY = 0;
     this.speed = 0;
     this.angleToGo = 0;
@@ -139,7 +139,7 @@ export class Player extends BasicObject{
       this.nextPosition.x += 2;
     }*/
 
-    this.nextPosition.y = Math.max(this.nextPosition.y, Core.camera.y);
+    this.nextPosition.y = Math.max(this.nextPosition.y, (Core.camera.y));
 
     Core.maps[Math.floor(this.y / 384) % Core.maps.length].checkCollision(this);
 
@@ -155,6 +155,7 @@ export class Player extends BasicObject{
         ((Core.mouse.lastClick.y) / 16 >> 0) - ((Core.camera.normalizedMapY * 24)),
         gridBackup
       );
+
       //console.log(Core.camera.normalizedMapHeight +  Core.camera.normalizedMapY);
       if(this.path.length != 0) {
         this.path = PF.Util.smoothenPath(gridBackup, this.path);

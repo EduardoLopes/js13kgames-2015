@@ -20,6 +20,8 @@ class NewGame extends Game{
         height: 16
     });
 
+    this.highScore = 0;
+
     //global player reference
     Core.player = this.player;
 
@@ -32,6 +34,8 @@ class NewGame extends Game{
   }
 
   resetGame(){
+
+    Core.mouse.justPressed = false;
 
     for (let i = 0; i < MAPS.length; i++) {
 
@@ -89,6 +93,15 @@ class NewGame extends Game{
 
     this.player.draw();
 
+    if(Core.pause == false){
+      Core.ctx.fillStyle = 'rgba(24,24,24,0.7)';
+      Core.ctx.fillRect(0, 0, Core.canvas.width, 16);
+      Core.ctx.font = '10pt sans-serif';
+      Core.ctx.textAlign = 'center';
+      Core.ctx.fillStyle = '#eee';
+      Core.ctx.fillText('Score: '+Core.camera.y, (Core.canvas.width / 2), 11);
+    }
+
     //path finder grid debug
 /*    for(let h = 0; h < Core.pathfinderGrid.nodes.length; ++h) {
       for(let w = 0; w < Core.pathfinderGrid.nodes[h].length; ++w) {
@@ -111,6 +124,29 @@ class NewGame extends Game{
   }
 
   update(){
+
+    if(Core.pause == true){
+
+      Core.ctx.fillStyle = 'rgba(24,24,24,0.7)';
+      Core.ctx.fillRect(0,0,Core.canvas.width, Core.canvas.height);
+
+      Core.ctx.fillStyle = '#eee';
+      Core.ctx.font = '12pt sans-serif';
+      Core.ctx.textAlign = 'center';
+      Core.ctx.fillText('CLICK TO TRY AGAIN', (Core.canvas.width / 2), (Core.canvas.height / 2) - 20);
+      Core.ctx.font = '10pt sans-serif';
+      Core.ctx.fillText('Score: '+ Core.camera.y, (Core.canvas.width / 2), (Core.canvas.height / 2) + 20);
+      Core.ctx.fillText('High Score: '+ Core.highScore, (Core.canvas.width / 2), (Core.canvas.height / 2) + 40);
+
+      if(Core.mouse.justPressed){
+        Core.pause = false;
+        this.resetGame();
+        this.timeHolder = 1;
+      }
+
+      return;
+    }
+
     super.update();
     Core.pathfinderDirty = false;
     if(this.lastMapIndex != Core.camera.normalizedMapHeight){
@@ -134,8 +170,6 @@ class NewGame extends Game{
       };
 
     }
-
-
 
     for (let i = Core.camera.normalizedMapY; i <= Core.camera.normalizedMapHeight; i++) {
       Core.maps[i % Core.maps.length].update();
