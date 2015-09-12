@@ -25,6 +25,8 @@ class NewGame extends Game{
     //global player reference
     Core.player = this.player;
 
+    Core.timeHolder = 1;
+
     Core.camera.setObjectToFollow(this.player);
 
     this.initMaps();
@@ -133,26 +135,42 @@ class NewGame extends Game{
       Core.ctx.fillStyle = '#eee';
       Core.ctx.font = '12pt sans-serif';
       Core.ctx.textAlign = 'center';
-      Core.ctx.fillText('CLICK TO TRY AGAIN', (Core.canvas.width / 2), (Core.canvas.height / 2) - 20);
+      Core.ctx.fillText('HOLD TO TRY AGAIN', (Core.canvas.width / 2), (Core.canvas.height / 2) - 20);
       Core.ctx.font = '10pt sans-serif';
       Core.ctx.fillText('Score: '+ Core.camera.y, (Core.canvas.width / 2), (Core.canvas.height / 2) + 20);
       Core.ctx.fillText('High Score: '+ Core.highScore, (Core.canvas.width / 2), (Core.canvas.height / 2) + 40);
 
-      if(Core.mouse.justPressed){
+      if(Core.mouse.down){
+        Core.timeHolder += 0.03;
+      } else {
+        Core.timeHolder += (0 - Core.timeHolder) * 0.05;
+      }
+
+      Core.ctx.fillStyle = '#181818';
+      Core.ctx.fillRect(0, 0, Core.canvas.width * Core.timeHolder, Core.canvas.height)
+
+      if(Core.timeHolder >= 1.2){
         Core.pause = false;
         this.resetGame();
-        this.timeHolder = 1;
+        //Core.timeHolder = 0;
       }
 
       return;
     }
 
     super.update();
+
+    if(Core.timeHolder > 0){
+      Core.ctx.fillStyle = '#181818';
+      Core.ctx.fillRect(0, 0, Core.canvas.width * Core.timeHolder, Core.canvas.height)
+    }
+
+    Core.timeHolder += (-1 - Core.timeHolder) * 0.05;
+
     Core.pathfinderDirty = false;
     if(this.lastMapIndex != Core.camera.normalizedMapHeight){
       this.lastMapIndex = Core.camera.normalizedMapHeight;
       let indexPosition = 0;
-      Core.pathfinderDirty = true;
       for (let i = Core.camera.normalizedMapY; i <= Core.camera.normalizedMapHeight; i++) {
 
         for(let h = Core.maps[i % Core.maps.length].rows * indexPosition; h < Core.maps[i % Core.maps.length].rows * (indexPosition + 1); ++h) {

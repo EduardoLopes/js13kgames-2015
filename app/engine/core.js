@@ -14,3 +14,4 @@ Core.pathfinder = new PF.AStarFinder();
 Core.resetGame = null;
 Core.pause = false;
 Core.highScore = 0;
+Core.timeHolder = 1;
