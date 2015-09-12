@@ -23,8 +23,8 @@ export class MapPiece extends Tilemap{
       this.enemies[i] = new Enemy({
         x: (emptyTile.x * 16) + this.x,
         y: (emptyTile.y * 16) + this.y,
-        width: 16,
-        height: 16
+        width: 12,
+        height: 12
       });
 
       if(this.y == 0){

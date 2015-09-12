@@ -14,8 +14,8 @@ export class Enemy extends BasicObject{
     this.bullet = new Bullet({
       x: 0,
       y: 0,
-      width: 8,
-      height: 8,
+      width: 4,
+      height: 4,
       ownerReference: this
     });
 

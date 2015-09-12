@@ -20,8 +20,8 @@ export class Player extends BasicObject{
     this.bullet = new Bullet({
       x: 0,
       y: 0,
-      width: 8,
-      height: 8,
+      width: 6,
+      height: 6,
       ownerReference: this
     });
 
