@@ -26,6 +26,8 @@ export class Player extends BasicObject{
       ownerReference: this
     });
 
+    this.radius = (this.width / 2) + 2;
+
   }
 
   shoot(x, y){
@@ -51,7 +53,7 @@ export class Player extends BasicObject{
     drawCircle(
       (this.x + this.width / 2) - Core.camera.x,
       (this.y + this.height / 2) - Core.camera.y,
-      (this.width / 2) + 2, //radius
+      this.radius, //radius
       '#ff006c'
     );
     this.bullet.draw();
@@ -184,6 +186,8 @@ export class Player extends BasicObject{
     this.moveTo(Core.mouse.lastClick);
 
     this.checkBulletCollisionAgainstEnemy();
+
+    this.radius += (((this.width / 2) + 2) - this.radius) * 0.2;
 
   }
 }

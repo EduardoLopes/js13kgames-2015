@@ -132,6 +132,7 @@ export class Mouse{
 
     if(this.justPressed && Core.player.bullet.alive == false){
       this.size = 10;
+      Core.player.radius = (Core.player.width / 2) + 8;
       Core.player.shoot(enemy.x + (enemy.width / 2), enemy.y + (enemy.height / 2));
     }
 

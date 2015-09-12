@@ -92,7 +92,7 @@ export class Enemy extends BasicObject{
       this.bullet.angle = angle(this.x + (this.width / 2), this.y + (this.height / 2), Core.player.x + (Core.player.width / 2), Core.player.y + (Core.player.height / 2));
       this.bullet.nextPosition.x = this.x + (4);
       this.bullet.nextPosition.y = this.y + (4);
-
+      this.radius = (this.width / 2) + 6;
       if(Math.cos(this.bullet.angle) > 0) {
         Core.camera.shake(-5);
       } else {
@@ -110,6 +110,8 @@ export class Enemy extends BasicObject{
       Core.pause = true;
       Core.timeHolder = 0;
     }
+
+    this.radius += (((this.width / 2) + 2) - this.radius) * 0.2;
 
   }
 }
