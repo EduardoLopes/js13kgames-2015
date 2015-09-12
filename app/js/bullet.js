@@ -2,6 +2,7 @@ import {BasicObject} from '../engine/BasicObject';
 import {Core} from '../engine/core';
 import {angle} from '../engine/angle';
 import {distance} from '../engine/distance';
+import {drawCircle} from '../engine/helper';
 
 const SAT = require('../engine/sat/SAT.js');
 
@@ -39,8 +40,15 @@ export class Bullet extends BasicObject{
 
     if(this.alive == false) return false;
 
-    Core.ctx.fillStyle = '#e96';
-    Core.ctx.fillRect(this.x - Core.camera.x, this.y - Core.camera.y, this.width, this.height);
+    //Core.ctx.fillStyle = '';
+    //Core.ctx.fillRect(this.x - Core.camera.x, this.y - Core.camera.y, this.width, this.height);
+
+    drawCircle(
+      (this.x + this.width / 2) - Core.camera.x,
+      (this.y + this.height / 2) - Core.camera.y,
+      (this.width / 2) + 2, //radius
+      '#e96'
+    );
 
   }
 

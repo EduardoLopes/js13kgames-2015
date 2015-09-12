@@ -3,7 +3,7 @@ import {Core} from '../engine/core';
 import {angle} from '../engine/angle';
 import {distance} from '../engine/distance';
 import {Bullet} from './bullet';
-
+import {drawCircle} from '../engine/helper';
 const SAT = require('../engine/sat/SAT.js');
 
 export class Enemy extends BasicObject{
@@ -51,7 +51,7 @@ export class Enemy extends BasicObject{
 
     this.bullet.draw();
 
-    Core.ctx.fillStyle = '#f52dee';
+    //Core.ctx.fillStyle = '#f52dee';
 
     if(distance(this.x + (this.width / 2), this.y + (this.height / 2), Core.player.x + (Core.player.width / 2), Core.player.y + (Core.player.height / 2)) < 128 && Core.pause == false){
       Core.ctx.strokeStyle = 'rgba(255,0,40,0.2)';
@@ -62,7 +62,14 @@ export class Enemy extends BasicObject{
       Core.ctx.stroke();
     }
 
-    Core.ctx.fillRect(this.x - Core.camera.x, this.y - Core.camera.y, this.width, this.height);
+    drawCircle(
+      (this.x + this.width / 2) - Core.camera.x,
+      (this.y + this.height / 2) - Core.camera.y,
+      (this.width / 2) + 2, //radius
+      '#f52dee'
+    );
+
+    //Core.ctx.fillRect(this.x - Core.camera.x, this.y - Core.camera.y, this.width, this.height);
 
   }
 

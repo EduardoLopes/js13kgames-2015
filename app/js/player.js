@@ -1,11 +1,10 @@
 import {Core} from '../engine/core';
 import {BasicObject} from '../engine/BasicObject';
 import {angle} from '../engine/angle';
-import {lerp} from '../engine/lerp';
+import {drawCircle} from '../engine/helper';
 import {distance} from '../engine/distance';
 import {Bullet} from './bullet';
 const PF = require('pathfinding');
-
 const SAT = require('../engine/sat/SAT.js');
 
 export class Player extends BasicObject{
@@ -48,10 +47,16 @@ export class Player extends BasicObject{
 
   draw(){
 
+    drawCircle(
+      (this.x + this.width / 2) - Core.camera.x,
+      (this.y + this.height / 2) - Core.camera.y,
+      (this.width / 2) + 2, //radius
+      '#ff006c'
+    );
     this.bullet.draw();
 
-    Core.ctx.fillStyle = '#ff006c';
-    Core.ctx.fillRect(this.x - Core.camera.x, this.y - Core.camera.y, this.width, this.height);
+    /*Core.ctx.fillStyle = '#ff006c';
+    Core.ctx.fillRect(this.x - Core.camera.x, this.y - Core.camera.y, this.width, this.height);*/
 
   }
 
