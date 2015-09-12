@@ -15,7 +15,7 @@ function cacheTilemap(tilemap){
         let index = tilemap.cols * y + x;
 
         if(tilemap.map[index] > 0){
-          cacheCtx.fillStyle = 'rgba(24,24,24,1)';
+          cacheCtx.fillStyle = Core.colors.b;
           cacheCtx.fillRect(((x * tilemap.tilesize)), ((y * tilemap.tilesize)), tilemap.tilesize, tilemap.tilesize);
         }
 

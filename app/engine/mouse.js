@@ -94,26 +94,30 @@ export class Mouse{
 
 
     if(Core.player.bullet.alive == false && Core.pause == false){
-      Core.ctx.strokeStyle = '#181818';
+      Core.ctx.strokeStyle = Core.colors.b;
 
       drawLine(
         (Core.player.x + 8) - Core.camera.x,
         (Core.player.y + 8) - Core.camera.y,
         this.x,
         this.y,
-        '#777'
+        '#8F82AC'
       );
 
+      Core.ctx.strokeStyle = 'rgba(179,49,50,0.6)';
+
     } else {
-      Core.ctx.strokeStyle = '#ff0028';
+      Core.ctx.strokeStyle = '#B33132';
     }
 
     drawCircle(
       this.x,
       this.y,
       this.size,
-      'rgba(255,0,40,0.2)'
+      'rgba(179,49,50,0.2)'
     );
+    Core.ctx.stroke();
+
 
   }
 

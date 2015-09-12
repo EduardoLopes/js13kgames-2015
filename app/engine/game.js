@@ -32,7 +32,8 @@ export class Game{
     this.container.style.width = this.screen.size.x+'px';
     this.container.style.height = this.screen.size.y+'px';
 
-    this.container.style.background = this.screen.background;
+    document.body.style.background = Core.colors.b;
+    this.container.style.background = Core.colors.bm;;
 
     if(this.screen.center){
       this.container.classList.add('center');

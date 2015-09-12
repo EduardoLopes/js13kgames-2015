@@ -47,11 +47,8 @@ class NewGame extends Game{
 
     }
 
-    this.player.nextPosition.x = 64;
-    this.player.nextPosition.y = 128;
-
-    Core.camera.reset();
     this.player.reset();
+    Core.camera.reset();
 
   }
 
@@ -95,19 +92,19 @@ class NewGame extends Game{
       Core.maps[i % Core.maps.length].draw();
     };
 
-    Core.ctx.fillStyle = '#181818';
+    Core.ctx.fillStyle = Core.colors.b;
     Core.ctx.fillRect(0, 0, 16, Core.canvas.height);
     Core.ctx.fillRect(Core.canvas.width - 16, 0, 16, Core.canvas.height);
 
     this.player.draw();
 
     if(Core.pause == false){
-      Core.ctx.fillStyle = 'rgba(24,24,24,0.7)';
+      Core.ctx.fillStyle = Core.colors.rb;
       Core.ctx.fillRect(0, 0, Core.canvas.width, 16);
       Core.ctx.font = '10pt sans-serif';
       Core.ctx.textAlign = 'center';
-      Core.ctx.fillStyle = '#eee';
-      Core.ctx.fillText('Score: '+Core.camera.y, (Core.canvas.width / 2), 11);
+      Core.ctx.fillStyle = Core.colors.w;
+      Core.ctx.fillText('Score: '+Core.camera.y, (Core.canvas.width / 2), 12);
     }
 
     //path finder grid debug
@@ -135,10 +132,10 @@ class NewGame extends Game{
 
     if(Core.pause == true){
 
-      Core.ctx.fillStyle = 'rgba(24,24,24,0.7)';
+      Core.ctx.fillStyle = Core.colors.rb;
       Core.ctx.fillRect(0,0,Core.canvas.width, Core.canvas.height);
 
-      Core.ctx.fillStyle = '#eee';
+      Core.ctx.fillStyle = Core.colors.w;
       Core.ctx.font = '12pt sans-serif';
       Core.ctx.textAlign = 'center';
       Core.ctx.fillText('HOLD TO TRY AGAIN', (Core.canvas.width / 2) - Core.camera.x, (Core.canvas.height / 2) - 20);
@@ -153,7 +150,7 @@ class NewGame extends Game{
         Core.timeHolder += (0 - Core.timeHolder) * 0.05;
       }
 
-      Core.ctx.fillStyle = '#181818';
+      Core.ctx.fillStyle = Core.colors.b;
       Core.ctx.fillRect(0, 0, (Core.canvas.width * Core.timeHolder) - Core.camera.x, Core.canvas.height)
 
       if(Core.timeHolder >= 1.2){
@@ -170,12 +167,10 @@ class NewGame extends Game{
     super.update();
 
     if(Core.timeHolder > 0){
-      Core.ctx.fillStyle = '#181818';
+      Core.ctx.fillStyle = Core.colors.b;
       Core.ctx.fillRect(0, 0, Core.canvas.width * Core.timeHolder, Core.canvas.height);
       Core.timeHolder += (-1 - Core.timeHolder) * 0.05;
     }
-
-
 
     Core.pathfinderDirty = false;
     if(this.lastMapIndex != Core.camera.normalizedMapHeight){
@@ -218,8 +213,7 @@ const game = new NewGame({
   name: '-',
   screen: {
     size: new Vector2(240, 384),
-    center: true,
-    background: '#ccc'
+    center: true
   },
   containerID: 'container'
 });

@@ -17,6 +17,7 @@ export class Enemy extends BasicObject{
       width: 4,
       height: 4,
       speed: 3,
+      color: Core.colors.eb,
       ownerReference: this
     });
 
@@ -56,7 +57,7 @@ export class Enemy extends BasicObject{
       (this.x + this.width / 2) - Core.camera.x,
       (this.y + this.height / 2) - Core.camera.y,
       this.radius, //radius
-      '#f52dee'
+      Core.colors.e
     );
 
     if(this.visible == false) return;
@@ -72,7 +73,7 @@ export class Enemy extends BasicObject{
         (Core.player.y + 8) - Core.camera.y,
         (this.x + 8) - Core.camera.x,
         (this.y + 8) - Core.camera.y,
-        'rgba(255,0,40,0.2)'
+        'rgba(179,49,50,0.2)'
       );
 
     }
@@ -109,6 +110,7 @@ export class Enemy extends BasicObject{
       Core.highScore = Math.max(Core.highScore, Core.camera.cameraMaxY);
       Core.pause = true;
       Core.timeHolder = 0;
+      Core.camera._shake = 0;
     }
 
     this.radius += (((this.width / 2) + 2) - this.radius) * 0.2;

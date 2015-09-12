@@ -15,6 +15,7 @@ export class Bullet extends BasicObject{
     this.ownerReference = options.ownerReference;
     this.setDead();
     this.speed = options.speed;
+    this.color = options.color;
   }
 
   setAlive(){
@@ -48,7 +49,7 @@ export class Bullet extends BasicObject{
       (this.x + this.width / 2) - Core.camera.x,
       (this.y + this.height / 2) - Core.camera.y,
       (this.width / 2) + 2, //radius
-      '#e96'
+      this.color
     );
 
   }

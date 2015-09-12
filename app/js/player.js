@@ -1,7 +1,7 @@
 import {Core} from '../engine/core';
 import {BasicObject} from '../engine/BasicObject';
 import {angle} from '../engine/angle';
-import {drawCircle} from '../engine/helper';
+import {drawCircle, drawLine} from '../engine/helper';
 import {distance} from '../engine/distance';
 import {Bullet} from './bullet';
 import {Random} from '../engine/random';
@@ -24,6 +24,7 @@ export class Player extends BasicObject{
       width: 6,
       height: 6,
       speed: 5,
+      color: Core.colors.pb,
       ownerReference: this
     });
 
@@ -55,11 +56,12 @@ export class Player extends BasicObject{
       (this.x + this.width / 2) - Core.camera.x,
       (this.y + this.height / 2) - Core.camera.y,
       this.radius, //radius
-      '#ff006c'
+      Core.colors.p
     );
+
     this.bullet.draw();
 
-    /*Core.ctx.fillStyle = '#ff006c';
+    /*Core.ctx.fillStyle = '#BF9FD4';
     Core.ctx.fillRect(this.x - Core.camera.x, this.y - Core.camera.y, this.width, this.height);*/
 
   }
@@ -69,6 +71,9 @@ export class Player extends BasicObject{
     this.pathNormalizedMapY = 0;
     this.speed = 0;
     this.angleToGo = 0;
+    this.x = this.nextPosition.x = 64;
+    this.y = this.nextPosition.y = 128;
+
     this.bullet.setDead();
   }
 
@@ -86,8 +91,8 @@ export class Player extends BasicObject{
 
     //console.log(toX, toY);
 
-    Core.ctx.fillStyle = '#000';
-    Core.ctx.fillRect(toX*16, toY* 16, 16, 16)
+/*    Core.ctx.fillStyle = '#000';
+    Core.ctx.fillRect(toX*16, toY* 16, 16, 16)*/
 
     this.angleToGo = angle(this.x + (this.width / 2), this.y + (this.height / 2), toX, toY);
 
@@ -129,7 +134,7 @@ export class Player extends BasicObject{
         enemy.kill();
         this.bullet.setDead();
 
-        if(enemy.x > 120) {
+        if(enemy.x < 120) {
           Core.camera.shake(-15);
         } else {
           Core.camera.shake(15);

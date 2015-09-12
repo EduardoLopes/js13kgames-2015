@@ -15,3 +15,14 @@ Core.resetGame = null;
 Core.pause = false;
 Core.highScore = 0;
 Core.timeHolder = 1;
+
+Core.colors = {
+  b: '#21313E', //background
+  rb: 'rgba(33,49,62, 0.7)', //rbg background color opacity
+  bm: '#BF9FD4', //background map
+  w: '#F6BAF7', //words
+  p: '#268073', //player
+  pb: '#20575F', //player bullet
+  e: '#793E1D', //player
+  eb: '#4D1F14' //player
+}
