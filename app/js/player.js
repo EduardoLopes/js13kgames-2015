@@ -27,6 +27,7 @@ export class Player extends BasicObject{
       color: Core.colors.pb,
       ownerReference: this
     });
+    this.pa = 0;//particle angle
 
     this.radius = (this.width / 2) + 2;
 
@@ -58,6 +59,16 @@ export class Player extends BasicObject{
       this.radius, //radius
       Core.colors.p
     );
+
+    for (let i = 0; i < 3; i++) {
+      let angle = i * (Math.PI * 2) / 3;
+      drawCircle(
+        ((this.x + this.width / 2) - Core.camera.x) + (Math.cos(this.pa + (this.pa + angle )) * ((((this.width / 2) + 2) - (this.radius + 0.4)) * 4)),
+        ((this.y + this.height / 2) - Core.camera.y) + (Math.sin(this.pa + (this.pa + angle )) * ((((this.width / 2) + 2) - (this.radius + 0.4)) * 4)),
+        2, //radius
+        '#98CF6F'
+      );
+    };
 
     this.bullet.draw();
 
@@ -201,6 +212,13 @@ export class Player extends BasicObject{
     this.checkBulletCollisionAgainstEnemy();
 
     this.radius += (((this.width / 2) + 2) - this.radius) * 0.2;
+
+    if(this.velocity.x > 0){
+      this.pa += 0.05;
+    } else {
+      this.pa -= 0.05;
+    }
+
 
   }
 }
