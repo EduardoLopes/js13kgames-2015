@@ -2,6 +2,7 @@ import {Core} from './core';
 import {Vector2} from './vector2';
 import {BasicObject} from './BasicObject';
 import {distance} from './distance';
+import {drawCircle, drawLine} from '../engine/helper';
 
 export class Mouse{
   constructor(x, y){
@@ -67,13 +68,13 @@ export class Mouse{
   drawFree(){
 
     Core.ctx.strokeStyle = '#181818';
-    Core.ctx.fillStyle = 'rgba(255,255,255,0.2)';
-    Core.ctx.beginPath();
-    Core.ctx.arc(this.x, this.y, this.size, Math.PI * 2, 0, false);
-    //Core.ctx.fillRect(this.x, this.y, 16, 16);
-    Core.ctx.closePath();
+    drawCircle(
+      this.x,
+      this.y,
+      this.size,
+      'rgba(255,255,255,0.2)'
+    );
     Core.ctx.stroke();
-    Core.ctx.fill();
 
   }
 
@@ -93,29 +94,26 @@ export class Mouse{
 
 
     if(Core.player.bullet.alive == false && Core.pause == false){
-      Core.ctx.fillStyle = 'rgba(255,0,40,0.2)';
       Core.ctx.strokeStyle = '#181818';
 
-      Core.ctx.strokeStyle = '#777';
-      Core.ctx.beginPath();
-      Core.ctx.moveTo((Core.player.x + 8) - Core.camera.x, (Core.player.y + 8) - Core.camera.y);
-      Core.ctx.lineTo(this.x, this.y);
-      Core.ctx.closePath();
-      Core.ctx.stroke();
+      drawLine(
+        (Core.player.x + 8) - Core.camera.x,
+        (Core.player.y + 8) - Core.camera.y,
+        this.x,
+        this.y,
+        '#777'
+      );
 
     } else {
-      Core.ctx.fillStyle = 'rgba(255,0,40,0.4)';
       Core.ctx.strokeStyle = '#ff0028';
     }
 
-    Core.ctx.beginPath();
-    Core.ctx.arc(this.x, this.y, this.size, Math.PI * 2, 0, false);
-    //Core.ctx.fillRect(this.x, this.y, 16, 16);
-    Core.ctx.closePath();
-    Core.ctx.stroke();
-    Core.ctx.fill();
-
-
+    drawCircle(
+      this.x,
+      this.y,
+      this.size,
+      'rgba(255,0,40,0.2)'
+    );
 
   }
 

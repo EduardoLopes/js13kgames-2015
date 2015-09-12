@@ -7,3 +7,12 @@ export function drawCircle(x, y, radius, color){
   Core.ctx.closePath();
   Core.ctx.fill();
 }
+
+export function drawLine(mx, my, lx, ly, color){
+  Core.ctx.strokeStyle = color;
+  Core.ctx.beginPath();
+  Core.ctx.moveTo(mx, my);
+  Core.ctx.lineTo(lx, ly);
+  Core.ctx.closePath();
+  Core.ctx.stroke();
+}
