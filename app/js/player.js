@@ -1,7 +1,7 @@
 import {Core} from '../engine/core';
 import {BasicObject} from '../engine/BasicObject';
 import {angle} from '../engine/angle';
-import {drawCircle, drawLine} from '../engine/helper';
+import {drawCircle} from '../engine/helper';
 import {distance} from '../engine/distance';
 import {Bullet} from './bullet';
 import {Random} from '../engine/random';
@@ -81,7 +81,7 @@ export class Player extends BasicObject{
 
     this.bullet.angle
 
-    if(this.bullet.alive){
+    if(this.bullet.alive && Core.pause == false){
 
       this.bulletParticle.x += Math.cos(this.bullet.angle - Math.PI) * 2;
       this.bulletParticle.y += Math.sin(this.bullet.angle - Math.PI) * 2;

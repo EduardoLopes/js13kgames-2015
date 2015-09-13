@@ -20,13 +20,13 @@ export class Bullet extends BasicObject{
 
   setAlive(){
     this.alive = true;
-    this.nextPosition.x = this.ownerReference.x + (4);
-    this.nextPosition.y = this.ownerReference.y + (4);
     this.colliding = false;
   }
 
   setDead(){
     this.alive = false;
+    this.nextPosition.x = this.ownerReference.x + (4);
+    this.nextPosition.y = this.ownerReference.y + (4);
   }
 
   reset(){

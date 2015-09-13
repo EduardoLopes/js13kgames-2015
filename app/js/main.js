@@ -40,7 +40,8 @@ class NewGame extends Game{
   resetGame(){
 
     Core.mouse.justPressed = false;
-
+    Core.mouse.state = 'Free';
+    Core.mouse.x = Core.mouse.y = 0;
     for (let i = 0; i < MAPS.length; i++) {
 
       Core.maps[i].onResetGame(0, 384 * i);
@@ -194,11 +195,11 @@ class NewGame extends Game{
 
     }
 
+    this.player.update();
+
     for (let i = Core.camera.normalizedMapY; i <= Core.camera.normalizedMapHeight; i++) {
       Core.maps[i % Core.maps.length].update();
     };
-
-    this.player.update();
 
     Core.mouse.justPressed = false;
 

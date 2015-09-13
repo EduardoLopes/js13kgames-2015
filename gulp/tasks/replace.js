@@ -27,5 +27,6 @@ gulp.task('replace', ['htmlbuild'], function(){
     .pipe(replace(/ctx/g, '_s'))
     .pipe(replace(/vector/g, '_t'))
     .pipe(replace(/vector2/g, '_u'))
+    .pipe(replace(/bulletParticle/g, '_v'))
     .pipe(gulp.dest(dist + '/js/'));
 });
