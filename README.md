@@ -3,7 +3,7 @@
 This is my [js13kgames](http://js13kgames.com/) 2015 entry!
 
 
-##Tequinical stuff##
+##Technical stuff##
 
 
 ### Render ###
