@@ -11,11 +11,12 @@ export class MapPiece extends Tilemap{
 
     this.enemies = [];
 
-    this.placeEnemies();
+    this.initEnemies();
+    this.resetEnemies();
 
   }
 
-  placeEnemies(){
+  initEnemies(){
 
     for (let i = 0; i < 3; i++) {
 
@@ -27,12 +28,6 @@ export class MapPiece extends Tilemap{
         width: 12,
         height: 12
       });
-
-      if(this.y == 0){
-        this.enemies[i].active = false;
-        this.enemies[i].visible = false;
-        this.enemies[i].radius = 0;
-      }
 
     };
 
@@ -66,7 +61,8 @@ export class MapPiece extends Tilemap{
   }
 
   resetEnemies(){
-    let randInt = Random.int(0,3);
+    let randInt = Random.int(0, MAPS.length - 1);
+
     this.map = MAPS[randInt].map;
     this.mapImage.src = MAPS[randInt].src;
     Core.lastMapIndex = 0;
@@ -84,6 +80,8 @@ export class MapPiece extends Tilemap{
 
       if(this.y == 0){
         this.enemies[i].radius = 0;
+        this.enemies[i].active = false;
+        this.enemies[i].visible = false;
       }
 
     };
@@ -108,7 +106,7 @@ export class MapPiece extends Tilemap{
 
     if(Core.camera.y > this.height + this.y){
 
-      this.y += (this.height * 4);
+      this.y += (this.height * MAPS.length);
 
       this.resetEnemies();
     }
