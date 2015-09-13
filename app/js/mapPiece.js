@@ -55,7 +55,13 @@ export class MapPiece extends Tilemap{
     this.x = x;
     this.y = y;
 
-    if(this.y == 0) return;
+    if(this.y == 0) {
+      let randInt = Random.int(0, MAPS.length - 1);
+      this.map = MAPS[randInt].map;
+      this.mapImage.src = MAPS[randInt].src;
+      Core.lastMapIndex = 0;
+      return;
+    }
 
     this.resetEnemies();
   }
