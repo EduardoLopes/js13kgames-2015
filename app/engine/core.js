@@ -15,6 +15,7 @@ Core.resetGame = null;
 Core.pause = false;
 Core.highScore = 0;
 Core.timeHolder = 1;
+Core.lastMapIndex = 0; //this is important for the pathfinder grid system
 
 Core.colors = {
   b: '#21313E', //background

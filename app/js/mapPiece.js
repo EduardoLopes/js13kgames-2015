@@ -2,6 +2,7 @@ import {Tilemap} from '../engine/tilemap';
 import {Random} from '../engine/random';
 import {Enemy} from './enemy';
 import {Core} from '../engine/core';
+import {MAPS} from './maps';
 
 export class MapPiece extends Tilemap{
   constructor(options){
@@ -65,6 +66,10 @@ export class MapPiece extends Tilemap{
   }
 
   resetEnemies(){
+    let randInt = Random.int(0,3);
+    this.map = MAPS[randInt].map;
+    this.mapImage.src = MAPS[randInt].src;
+    Core.lastMapIndex = 0;
 
     for (let i = 0; i < this.enemies.length; i++) {
 

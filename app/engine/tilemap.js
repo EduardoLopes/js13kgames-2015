@@ -1,30 +1,6 @@
 import {Core} from './core';
 const SAT = require('./sat/SAT.js');
 
-const cacheCanvas = document.createElement('canvas');
-const cacheCtx = cacheCanvas.getContext('2d');
-
-function cacheTilemap(tilemap){
-
-    cacheCanvas.width = tilemap.width;
-    cacheCanvas.height = tilemap.height;
-
-    for (let y = 0; y < tilemap.rows; y++) {
-      for (let x = 0; x < tilemap.cols; x++) {
-
-        let index = tilemap.cols * y + x;
-
-        if(tilemap.map[index] > 0){
-          cacheCtx.fillStyle = Core.colors.b;
-          cacheCtx.fillRect(((x * tilemap.tilesize)), ((y * tilemap.tilesize)), tilemap.tilesize, tilemap.tilesize);
-        }
-
-      }
-    };
-
-  return cacheCanvas.toDataURL("image/png");
-}
-
 export class Tilemap{
 
   constructor(options){
@@ -39,8 +15,7 @@ export class Tilemap{
     this.y = options.y;
 
     this.mapImage = new Image();
-
-    this.mapImage.src = cacheTilemap(this);
+    this.mapImage.src = options.src;
 
   }
 

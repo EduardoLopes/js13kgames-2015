@@ -13,7 +13,6 @@ class NewGame extends Game{
     super(options);
 
     Core.maps = [];
-    this.lastMapIndex = 0;
 
     this.player = new Player({
         x: 64,
@@ -46,7 +45,7 @@ class NewGame extends Game{
       Core.maps[i].onResetGame(0, 384 * i);
 
     }
-
+    Core.lastMapIndex = 0;
     this.player.reset();
     Core.camera.reset();
 
@@ -57,7 +56,8 @@ class NewGame extends Game{
     for (let i = 0; i < MAPS.length; i++) {
 
       Core.maps[i] = new MapPiece({
-        map: MAPS[i],
+        map: MAPS[i].map,
+        src: MAPS[i].src,
         width: 240,
         height: 384,
         rows: 24,
@@ -173,8 +173,8 @@ class NewGame extends Game{
     }
 
     Core.pathfinderDirty = false;
-    if(this.lastMapIndex != Core.camera.normalizedMapHeight){
-      this.lastMapIndex = Core.camera.normalizedMapHeight;
+    if(Core.lastMapIndex != Core.camera.normalizedMapHeight){
+      Core.lastMapIndex = Core.camera.normalizedMapHeight;
       let indexPosition = 0;
       for (let i = Core.camera.normalizedMapY; i <= Core.camera.normalizedMapHeight; i++) {
 
