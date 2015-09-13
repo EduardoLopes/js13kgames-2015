@@ -17,15 +17,16 @@ export class Mouse{
     this.size = 10;
     this.state = 'Free';
     this.IDenemyLocked = 0;
+    this.touch = false;
 
-    Core.canvas.addEventListener('mousemove',function(e){
-
+    this.addEventCanvas('mousemove',function(e){
+      e.preventDefault();
       this.setMousePosition(e);
 
     }.bind(this));
 
-    Core.canvas.addEventListener('mousedown',function(e){
-
+    this.addEventCanvas('mousedown',function(e){
+      e.preventDefault();
       this.setMousePosition(e);
       this.down = true;
       this.justPressed = true;
@@ -34,23 +35,61 @@ export class Mouse{
 
     }.bind(this));
 
-    Core.canvas.addEventListener('mouseup',function(e){
-
+    this.addEventCanvas('mouseup',function(e){
+      e.preventDefault();
       this.setMousePosition(e);
+      this.down = false;
+
+    }.bind(this));
+
+    this.addEventCanvas('touchstart',function(e){
+      e.preventDefault();
+      this.touch = true;
+
+      this.setTouchPosition(e);
+      this.down = true;
+      this.justPressed = true;
+      this.lastClick.x = this.screen.x;
+      this.lastClick.y = this.screen.y;
+
+    }.bind(this));
+
+    this.addEventCanvas('touchend',function(e){
+      e.preventDefault();
+
       this.down = false;
 
     }.bind(this));
 
   }
 
+  addEventCanvas(event, callback){
+
+    Core.canvas.addEventListener(event, callback.bind(this));
+
+  }
+
+  setTouchPosition(e){
+
+    this.rect = Core.canvas.getBoundingClientRect();
+    this.setPosition(e.touches[0].clientX - this.rect.left, e.touches[0].clientY - this.rect.top);
+
+  }
+
   setMousePosition(e){
 
     this.rect = Core.canvas.getBoundingClientRect();
-    this.x = e.clientX - this.rect.left;
-    this.y = e.clientY - this.rect.top;
+    this.setPosition(e.clientX - this.rect.left, e.clientY - this.rect.top);
+
+  }
+
+  setPosition(x, y){
+
+    this.x = x;
+    this.y = y;
+
     this.screen.x = this.x + Core.camera.x;
     this.screen.y = this.y + Core.camera.y;
-
   }
 
   checkDistanceToEnemy(){
@@ -66,6 +105,8 @@ export class Mouse{
   }
 
   drawFree(){
+
+    if(this.touch) return false;
 
     Core.ctx.strokeStyle = '#181818';
     drawCircle(
@@ -118,7 +159,6 @@ export class Mouse{
     );
     Core.ctx.stroke();
 
-
   }
 
   updateLocked(){
@@ -134,10 +174,14 @@ export class Mouse{
       this.state = 'Free';
     }
 
-    if(this.justPressed && Core.player.bullet.alive == false){
+    if(
+      (this.justPressed && Core.player.bullet.alive == false) ||
+      (this.touch == true && Core.player.bullet.alive == false && enemy.visible == true)){
       this.size = 10;
       Core.player.radius = (Core.player.width / 2) + 8;
       Core.player.shoot(enemy.x + (enemy.width / 2), enemy.y + (enemy.height / 2));
+      this.state = 'Free';
+      console.log('asd');
     }
 
   }

@@ -41,7 +41,6 @@ class NewGame extends Game{
 
     Core.mouse.justPressed = false;
     Core.mouse.state = 'Free';
-    Core.mouse.x = Core.mouse.y = 0;
     for (let i = 0; i < MAPS.length; i++) {
 
       Core.maps[i].onResetGame(0, 384 * i);
