@@ -2,7 +2,6 @@ import {Core} from './core';
 import {Vector2} from './vector2';
 import {Camera} from './camera';
 import {Mouse} from './mouse';
-//import {QuadTree} from './quadtree';
 import {InitKeys} from './keys';
 
 export class Game{
